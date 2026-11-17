@@ -35,6 +35,18 @@
     "codeRepository": "https://github.com/sarathlal-12/airbridge"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "AirBridge in 45 seconds",
+    "description": "Play your iPhone or Android phone's sound through your Windows PC: AirPlay on iPhone, Bluetooth on Android, in sync with video, phone volume buttons work.",
+    "thumbnailUrl": "https://sarath-apps.vercel.app/airbridge/promo-cover.jpg",
+    "contentUrl": "https://sarath-apps.vercel.app/airbridge/promo.mp4",
+    "uploadDate": "2026-11-17",
+    "duration": "PT45S"
+  }
+  </script>
 
   <script>
     try { var t = localStorage.getItem('sv-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
@@ -165,6 +177,23 @@
     }
     @media (max-width: 420px) { .phone { transform: scale(.88); margin: -36px 0; } }
 
+    /* watch: the vertical promo video in a phone-shaped frame, text beside it */
+    .watch { padding-top: 60px; padding-bottom: 20px; }
+    .watch-in { display: grid; grid-template-columns: 340px 1fr; gap: 64px; align-items: center; max-width: 900px; margin: 0 auto; }
+    .watch-frame { border-radius: 34px; padding: 8px; background: linear-gradient(145deg, #2A2A2C, #0B0B0C); box-shadow: var(--shadow); }
+    .watch-frame video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; border-radius: 27px; background: #0E0E0F; }
+    .watch-text h2 { margin-bottom: 14px; }
+    .watch-text .lead { margin: 0 0 18px; }
+    .watch-list { margin: 0 0 26px; padding: 0; list-style: none; display: grid; gap: 9px; font-size: 15px; }
+    .watch-list li { display: flex; gap: 10px; align-items: center; }
+    .watch-list li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none; }
+    @media (max-width: 860px) {
+      .watch-in { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+      .watch-frame { width: min(320px, 100%); margin: 0 auto; }
+      .watch-text .lead { margin: 0 auto 18px; }
+      .watch-list { justify-items: center; }
+    }
+
     /* reveal */
     .motion .rv { opacity: 0; transform: translateY(26px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
     .motion .rv.in { opacity: 1; transform: none; }
@@ -253,7 +282,7 @@
     <div class="nav-in">
       <a class="brand" href="#top" aria-label="AirBridge home"><img src="/airbridge/icon.png" alt="" width="32" height="32"><span>Air<span>Bridge</span></span></a>
       <nav class="nav-links" aria-label="Main">
-        <a href="/">All projects</a><a href="#how">How it works</a><a href="#iphone">iPhone</a><a href="#android">Android</a><a href="#download">Download</a><a href="#faq">FAQ</a>
+        <a href="/">All projects</a><a href="#watch">Video</a><a href="#how">How it works</a><a href="#iphone">iPhone</a><a href="#android">Android</a><a href="#download">Download</a><a href="#faq">FAQ</a>
       </nav>
       <button class="icon-btn theme-toggle" type="button" aria-label="Switch light or dark">
         <svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg>
@@ -302,6 +331,29 @@
             </div>
           </div>
           <div class="lap-base"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap watch" id="watch">
+      <div class="watch-in">
+        <div class="watch-frame rv">
+          <video controls playsinline preload="metadata" poster="/airbridge/promo-cover.jpg" width="720" height="1280">
+            <source src="/airbridge/promo.mp4" type="video/mp4">
+            <track kind="captions" src="/airbridge/promo.vtt" srclang="en" label="English">
+            Your browser can't play this video. <a href="/airbridge/promo.mp4">Download it</a>.
+          </video>
+        </div>
+        <div class="watch-text rv">
+          <div class="eyebrow">Watch</div>
+          <h2>AirBridge <span>in 45 seconds.</span></h2>
+          <p class="lead">See it work with a real iPhone: pick AirBridge in Control Center, and your music, videos and volume buttons carry over to the PC. Android joins over Bluetooth.</p>
+          <ul class="watch-list">
+            <li>iPhone over AirPlay, Android over Bluetooth</li>
+            <li>Instagram and YouTube stay in sync</li>
+            <li>Nothing to install on the phone</li>
+          </ul>
+          <a class="btn btn-accent" href="#download"><svg aria-hidden="true"><use href="#i-dl"/></svg>Download for Windows</a>
         </div>
       </div>
     </section>
