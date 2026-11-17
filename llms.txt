@@ -30,7 +30,7 @@
 
 - Website: https://sarath-apps.vercel.app/airbridge/
 - Source code: https://github.com/sarathlal-12/airbridge
-- Downloads (v1.0.0): https://github.com/sarathlal-12/airbridge/releases/tag/v1.0.0
+- Downloads (v1.0.1): https://github.com/sarathlal-12/airbridge/releases/tag/v1.0.1
 - Price: free. No account; audio stays on the home network.
 - Platforms: Windows 10 (2004) and 11, 64-bit. Nothing to install on the phone.
 
