@@ -33,3 +33,13 @@
 - Downloads (v1.0.0): https://github.com/sarathlal-12/airbridge/releases/tag/v1.0.0
 - Price: free. No account; audio stays on the home network.
 - Platforms: Windows 10 (2004) and 11, 64-bit. Nothing to install on the phone.
+
+# .light
+
+> Free Windows app: a small black island at the top of the screen, in the spirit of the iPhone's Dynamic Island. Hover it or press Alt+Space. Music controls with live sound waves, clipboard history, Claude Code status (shows when a session needs permission or has finished), prompt snippets that paste into the last app, Grab text (Ctrl+Alt+T, Windows' own offline text recognition) and Grab image (Ctrl+Alt+S), a file shelf, focus timer, notes and a File lab for converting images and making PDFs. Each feature can be switched off.
+
+- Website: https://sarath-apps.vercel.app/light/
+- Source code: https://github.com/sarathlal-12/light
+- Downloads (v0.3.0): https://github.com/sarathlal-12/light/releases/tag/v0.3.0
+- Price: free, MIT license. No account; everything stays on the PC.
+- Platforms: Windows 10 (2004) and 11, 64-bit.
