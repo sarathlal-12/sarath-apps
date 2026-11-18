@@ -40,6 +40,6 @@
 
 - Website: https://sarath-apps.vercel.app/light/
 - Source code: https://github.com/sarathlal-12/light
-- Downloads (v0.3.2): https://github.com/sarathlal-12/light/releases/tag/v0.3.2
+- Downloads (v0.3.3): https://github.com/sarathlal-12/light/releases/tag/v0.3.3
 - Price: free, MIT license. No account; everything stays on the PC.
 - Platforms: Windows 10 (2004) and 11, 64-bit.
