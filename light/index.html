@@ -36,6 +36,19 @@
   }
   </script>
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": ".light in 50 seconds",
+    "description": "A free Dynamic Island-style bar for Windows: music, clipboard history, Claude Code status, snippets, grab text and images, file shelf, focus timer and notes.",
+    "thumbnailUrl": "https://sarath-apps.vercel.app/light/promo-cover.jpg",
+    "contentUrl": "https://sarath-apps.vercel.app/light/promo.mp4",
+    "uploadDate": "2026-11-18",
+    "duration": "PT50S"
+  }
+  </script>
+
   <script>
     try { var t = localStorage.getItem('sv-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
@@ -221,6 +234,23 @@
     .foot nav { display: flex; gap: 18px; flex-wrap: wrap; }
     .foot a { text-decoration: none; } .foot a:hover { color: var(--text); }
     .center { text-align: center; } .center .lead { margin: 16px auto 0; }
+
+    /* watch: the vertical promo video in a phone-shaped frame, text beside it */
+    .watch { padding-top: 60px; padding-bottom: 20px; }
+    .watch-in { display: grid; grid-template-columns: 340px 1fr; gap: 64px; align-items: center; max-width: 900px; margin: 0 auto; }
+    .watch-frame { border-radius: 34px; padding: 8px; background: linear-gradient(145deg, #2A2A2C, #0B0B0C); box-shadow: var(--shadow); }
+    .watch-frame video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; border-radius: 27px; background: #0E0E0F; }
+    .watch-text h2 { margin-bottom: 14px; }
+    .watch-text .lead { margin: 0 0 18px; }
+    .watch-list { margin: 0 0 26px; padding: 0; list-style: none; display: grid; gap: 9px; font-size: 15px; }
+    .watch-list li { display: flex; gap: 10px; align-items: center; }
+    .watch-list li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none; }
+    @media (max-width: 860px) {
+      .watch-in { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+      .watch-frame { width: min(320px, 100%); margin: 0 auto; }
+      .watch-text .lead { margin: 0 auto 18px; }
+      .watch-list { justify-items: center; }
+    }
   </style>
 </head>
 <body>
@@ -287,6 +317,29 @@
           <div class="pill"><span class="art"></span>Now playing<span class="bars"><span></span><span></span><span></span><span></span></span></div>
           <div class="pill warn"><span class="dot" style="background:#FF9F0A">!</span>Needs your OK · my-app<span class="chipb">Show</span></div>
           <div class="pill"><span class="dot" style="background:#30D158">✓</span>Done · my-app</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap watch" id="watch">
+      <div class="watch-in">
+        <div class="watch-frame rv">
+          <video controls playsinline preload="metadata" poster="/light/promo-cover.jpg" width="720" height="1280" aria-label=".light promo video, 50 seconds">
+            <source src="/light/promo.mp4" type="video/mp4">
+            <track kind="captions" src="/light/promo.vtt" srclang="en" label="English">
+            Your browser can't play this video. <a href="/light/promo.mp4">Download it</a>.
+          </video>
+        </div>
+        <div class="watch-text rv">
+          <div class="eyebrow">Watch</div>
+          <h2>.light <span>in 50 seconds.</span></h2>
+          <p class="lead">A quick tour of the island: what's playing, your clipboard, Claude Code status, snippets, grabbing text from the screen, the file shelf, the focus timer and notes.</p>
+          <ul class="watch-list">
+            <li>Hover the top of the screen to open it</li>
+            <li>Tells you when Claude Code needs your OK</li>
+            <li>Free, and light on memory</li>
+          </ul>
+          <a class="btn btn-accent" href="#download">Download for Windows</a>
         </div>
       </div>
     </section>
