@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('/fx/quest.css');
 /* Shared motion + glow layer for every page. Loaded by /fx/fx.js. */
 .fx-bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; }
 .fx-aurora { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }

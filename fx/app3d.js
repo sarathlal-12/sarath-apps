@@ -310,8 +310,10 @@ function show() {
   const sec = document.createElement('section');
   sec.className = 'fx-show'; sec.setAttribute('aria-hidden', 'true');
   sec.innerHTML = '<div class="fx-show-in"><canvas></canvas><p class="fx-show-cap">' + CAPTIONS[KIND] + '</p><p class="fx-show-hint">Drag to spin</p></div>';
+  const ph = document.querySelector('[data-q="show"]');
   const watch = document.getElementById('watch');
-  if (watch && watch.parentNode === hero.parentNode) watch.before(sec); else hero.after(sec);
+  if (ph) ph.replaceWith(sec);
+  else if (watch && watch.parentNode === hero.parentNode) watch.before(sec); else hero.after(sec);
   const box = sec.firstElementChild;
   const cfg = { vinyl: { z: 8.6, y: 3.8, idle: 0.3 }, airbridge: { z: 9.5, y: 1.2, idle: 0.2 }, island: { z: 11.5, y: 0.6, idle: 0.25 }, platter: { z: 9.2, y: 4.2, idle: 0.3 } }[KIND];
   const s = makeStage(box, cfg); if (!s) return;
