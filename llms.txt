@@ -36,11 +36,11 @@
 
 # .light
 
-> Free Windows app: a small black island at the top of the screen, in the spirit of the iPhone's Dynamic Island. Hover it or press Alt+Space. Music controls with live sound waves, clipboard history, Claude Code status (shows when a session needs permission, is working or has finished, with a Claude tab listing every session), phone notifications from Android or iPhone through Phone Link (with Copy buttons for login codes, calls and phone battery), phone-to-PC copy and paste (Android through Phone Link, iPhone through a one-tap Apple Shortcut), a screenshot moment you can drag into any app, camera and mic in-use dots, charging, download and update moments, prompt snippets that paste into the last app, Grab text (Ctrl+Alt+T, Windows' own offline text recognition) and Grab image (Ctrl+Alt+S), a file shelf, focus timer, notes and a File lab for converting images and making PDFs. Each feature can be switched off.
+> Free Windows app: a small black island at the top of the screen, in the spirit of the iPhone's Dynamic Island. Hover it or press Alt+Space. Music controls with live sound waves, clipboard history, Claude Code status (shows when a session needs permission, is working or has finished, with a Claude tab listing every session), phone notifications from Android or iPhone through Phone Link (with Copy buttons for login codes, calls and phone battery), phone-to-PC copy and paste (Android through Phone Link, iPhone through a one-tap Apple Shortcut), a screenshot moment you can drag into any app, camera and mic in-use dots, charging, download and update moments, prompt snippets that paste into the last app, Grab text (Ctrl+Alt+T, Windows' own offline text recognition) and Grab image (Ctrl+Alt+S), a file shelf, focus timer, notes and a File lab for converting images and making PDFs. Optional fun switches: an island pet, shy mode, typing fire, confetti, a rage-click detector, a CPU/GPU mood ring with temperatures, touch grass, night owl and a drink-water reminder. Each feature can be switched off.
 
 - Website: https://sarath-apps.vercel.app/light/
 - Source code: https://github.com/sarathlal-12/light
-- Downloads (v1.3.1): https://github.com/sarathlal-12/light/releases/tag/v1.3.1
+- Downloads (v1.4.0): https://github.com/sarathlal-12/light/releases/tag/v1.4.0
 - Price: free, MIT license. No account; everything stays on the PC.
 - Platforms: Windows 10 (2004) and 11, 64-bit.
 
