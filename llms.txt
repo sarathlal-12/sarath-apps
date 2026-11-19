@@ -43,3 +43,13 @@
 - Downloads (v1.3.1): https://github.com/sarathlal-12/light/releases/tag/v1.3.1
 - Price: free, MIT license. No account; everything stays on the PC.
 - Platforms: Windows 10 (2004) and 11, 64-bit.
+
+# Byterake
+
+> Free, offline disk cleaner for Windows. Shows total, used and free space, measures a built-in cleanup catalog (temp files, the Recycle Bin, Chrome/Edge/Firefox cache folders, thumbnail cache, crash dumps, Windows Update and Delivery Optimization caches, npm/pip/NuGet caches), lists old installers and large files to tick one by one, scans drives into a sorted folder tree, and opens programs' own uninstallers. Nothing is removed until the user confirms the exact count and size; files go to the Recycle Bin by default. A built-in never-touch list protects System32, WinSxS, Program Files, pagefile/hiberfil/swapfile, Documents, Desktop, Pictures, Videos, Music, .git folders, system files, and links and junctions. No network, no AI, no telemetry.
+
+- Website: https://sarath-apps.vercel.app/byterake/
+- Source code: https://github.com/sarathlal-12/byterake
+- Downloads (v1.0.0): https://github.com/sarathlal-12/byterake/releases/tag/v1.0.0
+- Price: free, MIT license. No account; nothing leaves the PC.
+- Platforms: Windows 10 and 11, 64-bit (installer).
