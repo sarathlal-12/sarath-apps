@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-fx-icon="/light/icon.png" data-fx-object="island">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -50,7 +50,7 @@
   </script>
 
   <script>
-    try { var t = localStorage.getItem('sv-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+    var t = null; try { t = localStorage.getItem('sv-theme'); } catch (e) {} document.documentElement.dataset.theme = (t === 'light' || t === 'dark') ? t : 'dark';
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
   </script>
 
@@ -139,6 +139,7 @@
     .scene { max-width: 900px; margin: 60px auto 0; text-align: left; }
     .lap-screen { border-radius: 18px 18px 6px 6px; background: #0B0B0C; padding: 10px; box-shadow: var(--shadow); }
     .desk { position: relative; height: 420px; border-radius: 9px; overflow: hidden; background: radial-gradient(120% 90% at 20% 0%, #1D3A2A, #0E1512 55%, #07090A); }
+    @media (max-width: 600px) { .scene { overflow-x: clip; } }
     .lap-base { height: 14px; margin: 0 -26px; border-radius: 0 0 16px 16px; background: linear-gradient(#D7D5D0, #A9A7A2); }
     .isl { position: absolute; left: 50%; top: 8px; width: 340px; margin-left: -170px; background: #000; border-radius: 30px; padding: 14px 16px 16px; color: #F2F2F4; font-size: 12px; box-shadow: 0 20px 50px rgba(0,0,0,.5), 0 0 0 1px rgba(48,209,88,.35); }
     .tabs { display: flex; align-items: center; gap: 4px; margin-bottom: 10px; color: #8E8E96; }
@@ -252,6 +253,10 @@
       .watch-list { justify-items: center; }
     }
   </style>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+  <link rel="stylesheet" href="/fx/fx.css">
+  <script defer src="/fx/fx.js"></script>
+  <script type="module" src="/fx/app3d.js"></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>

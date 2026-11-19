@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <!-- Source: https://github.com/sarathlal-12/sarath-apps -->
-<html lang="en">
+<html lang="en" data-fx-colors="#FFFFFF,#C7C7CC,#8E8E93" data-fx-colors-light="#111111,#5A5A5F,#8E8E93">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Sarath Lal · Apps</title>
-  <meta name="description" content="Free apps by Sarath Lal. SpotVault keeps your music offline on Windows, Android and iPhone. AirBridge plays your phone's audio through your Windows PC.">
-  <meta name="theme-color" content="#ECEAE6" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0E0E0F" media="(prefers-color-scheme: dark)">
+  <meta name="description" content="Free apps by Sarath Lal: SpotVault keeps your music offline, AirBridge plays your phone's sound on your PC, .light puts a Dynamic Island on Windows, and Byterake frees up disk space safely.">
+  <meta name="theme-color" content="#0E0E0F">
   <link rel="icon" type="image/png" href="/logo.png">
   <link rel="canonical" href="https://sarath-apps.vercel.app/">
   <meta name="robots" content="index, follow">
@@ -15,7 +14,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://sarath-apps.vercel.app/">
   <meta property="og:title" content="Sarath Lal · Apps">
-  <meta property="og:description" content="SpotVault and AirBridge: free apps for your music and your phone.">
+  <meta property="og:description" content="SpotVault, AirBridge, .light and Byterake: small free apps that fix everyday annoyances.">
   <meta property="og:image" content="https://sarath-apps.vercel.app/og.png">
 
   <script>
@@ -24,85 +23,161 @@
       var sv = ['#download', '#faq', '#features', '#iphone', '#windows', '#tour', '#lyrics', '#top'];
       if (sv.indexOf(location.hash) !== -1) location.replace('/spotvault/' + location.hash);
     })();
-    try { var t = localStorage.getItem('sv-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}
+    var t = null; try { t = localStorage.getItem('sv-theme'); } catch (e) {} document.documentElement.dataset.theme = (t === 'light' || t === 'dark') ? t : 'dark';
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
   </script>
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/fx/fx.css">
 
   <style>
     :root {
       --bg: #ECEAE6; --surface: #FFFFFF; --card: #F6F5F2;
       --text: #111111; --muted: #66635E; --grey: #8C8984; --line: rgba(0,0,0,0.09);
-      --ink: #111111; --ink-text: #F2EFE8;
+      --ink: #111111; --ink-text: #F2EFE8; --accent: #111111;
       --shadow: 0 24px 60px rgba(17,17,17,0.12); --shadow-sm: 0 10px 28px rgba(17,17,17,0.08);
+      --fx-a1: #9A9AA0; --fx-a2: #B5B5BA; --fx-a3: #8E8E93;
+      --fx-bar: var(--ink);
+      --rainbow: linear-gradient(95deg, #111111 20%, #8E8E93 50%, #111111 80%);
       color-scheme: light;
     }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        --bg: #0E0E0F; --surface: #1C1C1E; --card: #19191B;
-        --text: #F2EFE8; --muted: #A09C96; --grey: #77736E; --line: rgba(255,255,255,0.1);
-        --ink: #F2EFE8; --ink-text: #111111;
-        --shadow: 0 24px 60px rgba(0,0,0,0.5); --shadow-sm: 0 10px 28px rgba(0,0,0,0.35);
-        color-scheme: dark;
-      }
-    }
     :root[data-theme="dark"] {
-      --bg: #0E0E0F; --surface: #1C1C1E; --card: #19191B;
+      --bg: #0B0B0D; --surface: #1A1A1D; --card: #19191B;
       --text: #F2EFE8; --muted: #A09C96; --grey: #77736E; --line: rgba(255,255,255,0.1);
-      --ink: #F2EFE8; --ink-text: #111111;
+      --ink: #F2EFE8; --ink-text: #111111; --accent: #E5E5EA; --fx-a1: #FFFFFF; --fx-a2: #C7C7CC; --fx-a3: #8E8E93;
+      --rainbow: linear-gradient(95deg, #FFFFFF 20%, #8E8E93 50%, #FFFFFF 80%);
       --shadow: 0 24px 60px rgba(0,0,0,0.5); --shadow-sm: 0 10px 28px rgba(0,0,0,0.35);
       color-scheme: dark;
     }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; display: flex; flex-direction: column; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { margin: 0; min-height: 100vh; background: var(--bg); color: var(--text); font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.55; overflow-x: clip; }
     a { color: inherit; }
-    :focus-visible { outline: 3px solid #D63A35; outline-offset: 3px; border-radius: 8px; }
-    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; width: 100%; }
-    h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.08; margin: 0; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 0 20px; width: 100%; }
+    h1, h2, h3 { letter-spacing: -0.035em; line-height: 1.04; margin: 0; }
 
-    .top { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
-    .me { display: flex; align-items: center; gap: 10px; font-weight: 700; text-decoration: none; letter-spacing: -0.02em; }
-    .me i { width: 32px; height: 32px; border-radius: 50%; background: var(--ink); color: var(--ink-text); display: grid; place-items: center; font-style: normal; font-size: 13px; font-weight: 800; }
-    .icon-btn { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: transparent; color: var(--text); cursor: pointer; }
+    /* top bar */
+    .top { position: sticky; top: 14px; z-index: 50; padding: 0 14px; }
+    .top-in { max-width: 1180px; margin: 0 auto; display: flex; align-items: center; gap: 10px; padding: 8px 8px 8px 16px; border-radius: 99px; border: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 70%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+    .me { display: flex; align-items: center; gap: 10px; font-weight: 700; text-decoration: none; letter-spacing: -0.02em; margin-right: auto; }
+    .me i { width: 32px; height: 32px; border-radius: 50%; background: var(--rainbow); color: var(--bg); display: grid; place-items: center; font-style: normal; font-size: 12px; font-weight: 800; }
+    .links { display: flex; gap: 4px; }
+    .links a { text-decoration: none; padding: 9px 14px; border-radius: 99px; font-size: 14px; font-weight: 600; color: var(--muted); transition: color .2s, background .2s; }
+    .links a:hover { color: var(--text); background: var(--line); }
+    .icon-btn { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); background: transparent; color: var(--text); cursor: pointer; flex: none; }
     .icon-btn svg { width: 18px; height: 18px; }
     .theme-toggle .moon { display: none; }
     :root[data-theme="light"] .theme-toggle .sun { display: none; }
     :root[data-theme="light"] .theme-toggle .moon { display: block; }
-    @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .theme-toggle .sun { display: none; } :root:not([data-theme="dark"]) .theme-toggle .moon { display: block; } }
+    @media (max-width: 640px) { .links { display: none; } }
 
-    .hero { padding: 70px 0 44px; }
-    .hero h1 { font-size: clamp(40px, 6.6vw, 76px); font-weight: 800; max-width: 820px; }
-    .hero h1 span { color: var(--grey); }
-    .hero p { color: var(--muted); font-size: 18px; max-width: 540px; margin: 20px 0 0; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 54px; padding: 0 28px; border-radius: 999px; font-weight: 650; font-size: 15px; text-decoration: none; border: 1px solid transparent; cursor: pointer; }
+    .btn svg { width: 18px; height: 18px; }
+    .btn-primary { background: var(--ink); color: var(--ink-text); }
+    .btn-ghost { background: color-mix(in srgb, var(--surface) 40%, transparent); color: var(--text); border-color: var(--line); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
 
-    .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding-bottom: 80px; }
-    .proj { --accent: #D63A35; position: relative; display: flex; flex-direction: column; gap: 18px; padding: 28px; border-radius: 30px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow-sm); text-decoration: none; overflow: hidden; transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; }
-    .proj:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-    .proj::after { content: ""; position: absolute; right: -80px; top: -80px; width: 240px; height: 240px; border-radius: 50%; background: var(--accent); opacity: .1; filter: blur(10px); transition: opacity .35s, transform .5s; }
-    .proj:hover::after { opacity: .18; transform: scale(1.15); }
-    .proj-head { display: flex; align-items: center; gap: 14px; }
-    .proj-logo { width: 60px; height: 60px; border-radius: 17px; flex: none; box-shadow: 0 0 0 1px var(--line); }
-    .proj h2 { font-size: 30px; font-weight: 750; }
+    /* hero */
+    .hero { display: grid; grid-template-columns: 1.05fr 1fr; align-items: center; gap: 10px; min-height: calc(100svh - 70px); padding: 40px 20px 30px; }
+    .kicker { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 10px; border-radius: 99px; border: 1px solid var(--line); font-size: 13px; font-weight: 600; color: var(--muted);
+      background: color-mix(in srgb, var(--surface) 50%, transparent); margin: 0 0 26px; }
+    .kicker .dot { width: 8px; height: 8px; border-radius: 50%; background: #30D158; box-shadow: 0 0 0 4px rgba(48,209,88,.18); animation: pulse 2s infinite; }
+    @keyframes pulse { 50% { box-shadow: 0 0 0 8px rgba(48,209,88,0); } }
+    .hero h1 { font-size: clamp(46px, 7.4vw, 96px); font-weight: 850; }
+    .hero h1 .w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .08em; margin-bottom: -.08em; }
+    .hero h1 .w > i { display: inline-block; font-style: normal; }
+    .fx .hero h1 > span.w { background: none; color: var(--text); }
+    .hero h1 .dim i { background: var(--rainbow); -webkit-background-clip: text; background-clip: text; color: transparent; background-size: 200% 100%; animation: shine 8s linear infinite; }
+    @keyframes shine { to { background-position: -200% 0; } }
+    .motion .hero h1 .w > i { transform: translateY(105%); animation: up 1s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: calc(var(--d) * 70ms + 150ms); }
+    .motion .hero h1 .dim i { animation: up 1s cubic-bezier(.2,.8,.2,1) forwards, shine 8s linear infinite; animation-delay: calc(var(--d) * 70ms + 150ms), 0s; }
+    @keyframes up { to { transform: none; } }
+    .lead { color: var(--muted); font-size: 19px; max-width: 520px; margin: 24px 0 0; }
+    .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+    .motion .fade { opacity: 0; animation: fade 1s cubic-bezier(.2,.8,.2,1) forwards; animation-delay: var(--dl, .6s); }
+    @keyframes fade { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+    .stage { position: relative; height: min(640px, 78vh); min-height: 420px; touch-action: pan-y; cursor: grab; user-select: none; }
+    .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1s; }
+    .stage.ready canvas { opacity: 1; }
+    .stage-fallback { position: absolute; inset: 0; display: grid; grid-template-columns: repeat(2, 110px); place-content: center; gap: 22px; transition: opacity .6s; }
+    .stage-fallback img { width: 110px; height: 110px; border-radius: 28px; box-shadow: var(--shadow); }
+    .stage.ready .stage-fallback { opacity: 0; pointer-events: none; }
+    .stage-label { position: absolute; left: 0; top: 0; pointer-events: none; padding: 10px 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--line);
+      box-shadow: var(--shadow); opacity: 0; transition: opacity .2s; display: grid; gap: 1px; border-left: 3px solid var(--c, var(--accent)); white-space: nowrap; }
+    .stage-label.on { opacity: 1; }
+    .stage-label b { font-size: 15px; } .stage-label span { font-size: 12.5px; color: var(--muted); }
+    .stage-hint { position: absolute; bottom: 6px; left: 0; right: 0; text-align: center; font-size: 12.5px; color: var(--grey); margin: 0; pointer-events: none; }
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: 0; padding-top: 50px; }
+      .hero > * { min-width: 0; }
+      .stage { height: 400px; min-height: 0; margin: 0 -20px; }
+    }
+
+    /* marquee */
+    .marquee { overflow: hidden; border-block: 1px solid var(--line); padding: 18px 0; margin: 10px 0 0;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+    .track { display: flex; gap: 46px; width: max-content; animation: slide 36s linear infinite; font-size: clamp(20px, 3vw, 30px); font-weight: 750; letter-spacing: -0.02em; white-space: nowrap; }
+    .track span { display: inline-flex; align-items: center; gap: 46px; color: var(--grey); }
+    .track span::after { content: "✦"; font-size: .6em; background: var(--rainbow); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    @keyframes slide { to { transform: translateX(-50%); } }
+    @media (prefers-reduced-motion: reduce) { .track { animation: none; } }
+
+    /* apps */
+    .sec { padding-top: 110px; }
+    .sec-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; flex-wrap: wrap; margin-bottom: 34px; }
+    .eyebrow { font-size: 13px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+    .sec h2 { font-size: clamp(36px, 5vw, 60px); font-weight: 800; }
+    .sec h2 span { color: var(--grey); }
+    .sec-head p { color: var(--muted); max-width: 380px; margin: 0; }
+
+    .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .proj { --accent: #D63A35; display: flex; flex-direction: column; gap: 18px; padding: 30px; border-radius: 30px; border: 1px solid var(--line); box-shadow: var(--shadow-sm); text-decoration: none; overflow: hidden; min-height: 340px; }
+    .proj::after { content: ""; position: absolute; right: -90px; top: -90px; width: 260px; height: 260px; border-radius: 50%; background: var(--accent); opacity: .14; filter: blur(30px); transition: opacity .4s, transform .6s; z-index: -1; }
+    .proj:hover::after { opacity: .3; transform: scale(1.3); }
+    .proj .num { position: absolute; right: 26px; top: 22px; font-size: 13px; font-weight: 700; color: var(--grey); font-variant-numeric: tabular-nums; }
+    .proj-head { display: flex; align-items: center; gap: 16px; }
+    .proj-logo { width: 68px; height: 68px; border-radius: 19px; flex: none; box-shadow: 0 0 0 1px var(--line), 0 14px 30px -10px var(--accent); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+    .proj:hover .proj-logo { transform: rotate(-6deg) scale(1.08); }
+    .proj h3 { font-size: 32px; font-weight: 800; }
     .proj .tag { color: var(--muted); font-size: 14px; }
     .proj p { color: var(--muted); margin: 0; font-size: 16px; }
     .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip { display: inline-flex; align-items: center; gap: 7px; background: var(--card); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; font-size: 13px; font-weight: 600; }
+    .chip { display: inline-flex; align-items: center; gap: 7px; background: color-mix(in srgb, var(--card) 70%, transparent); border: 1px solid var(--line); border-radius: 99px; padding: 6px 12px; font-size: 13px; font-weight: 600; }
     .chip svg { width: 15px; height: 15px; }
-    .go { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--accent); }
+    .go { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; font-weight: 650; font-size: 15px; color: var(--accent); }
     .go svg { width: 16px; height: 16px; transition: transform .3s; }
-    .proj:hover .go svg { transform: translateX(4px); }
-    .soon { display: grid; place-items: center; text-align: center; color: var(--muted); border-style: dashed; background: transparent; box-shadow: none; min-height: 180px; grid-column: 1 / -1; }
-    .soon:hover { transform: none; box-shadow: none; }
-    .soon::after { display: none; }
-    @media (max-width: 760px) { .projects { grid-template-columns: 1fr; } .hero { padding-top: 40px; } }
+    .proj:hover .go svg { transform: translateX(5px); }
+    .soon { display: grid; place-items: center; text-align: center; color: var(--muted); border-style: dashed; background: transparent !important; box-shadow: none; min-height: 150px; grid-column: 1 / -1; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+    .soon::after, .soon::before { display: none; }
+    @media (max-width: 760px) { .projects { grid-template-columns: 1fr; } .proj { min-height: 0; padding: 26px; } }
 
-    .motion .rv { opacity: 0; transform: translateY(22px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
-    .motion .rv.in { opacity: 1; transform: none; }
+    /* numbers */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .stat { padding: 28px; border-radius: 28px; border: 1px solid var(--line); background: color-mix(in srgb, var(--surface) 55%, transparent); }
+    .stat b { display: block; font-size: clamp(40px, 5vw, 64px); font-weight: 850; letter-spacing: -0.04em; line-height: 1; background: var(--rainbow); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .stat span { color: var(--muted); font-size: 15px; display: block; margin-top: 10px; }
+    @media (max-width: 760px) { .stats { grid-template-columns: 1fr 1fr; } .stat { padding: 22px; } }
 
-    footer { margin-top: auto; padding: 30px 0 40px; color: var(--muted); font-size: 14px; }
+    /* about */
+    .about { position: relative; overflow: hidden; border-radius: 40px; padding: clamp(36px, 6vw, 72px); background: #0E0E0F; color: #F2EFE8; border: 1px solid rgba(255,255,255,.08); }
+    .about::before { content: ""; position: absolute; inset: -40%; background: conic-gradient(from 0deg, #FFFFFF, #3A3A3F, #C7C7CC, #1A1A1D, #FFFFFF); opacity: .16; filter: blur(80px); animation: spin 22s linear infinite; }
+    @keyframes spin { to { transform: rotate(1turn); } }
+    @media (prefers-reduced-motion: reduce) { .about::before { animation: none; } }
+    .about > * { position: relative; }
+    .about h2 { font-size: clamp(32px, 4.6vw, 56px); font-weight: 800; max-width: 820px; }
+    .about h2 span { color: #8C8984; }
+    .about p { color: #B5B1AA; font-size: 18px; max-width: 600px; margin: 22px 0 32px; }
+    .about .btn-primary { background: #F2EFE8; color: #111; }
+
+    .motion .rv { opacity: 0; transition: opacity .9s ease, transform 1s cubic-bezier(.2,.8,.2,1); }
+    .motion .rv.in { opacity: 1; }
+
+    footer { padding: 60px 0 44px; color: var(--muted); font-size: 14px; }
     .foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
     .foot a { text-decoration: none; } .foot a:hover { color: var(--text); }
   </style>
@@ -113,81 +188,143 @@
     <symbol id="i-android" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 9.5l1.6-2.8a.4.4 0 0 0-.7-.4l-1.7 2.9A10 10 0 0 0 12 8.3a10 10 0 0 0-4.8.9L5.5 6.3a.4.4 0 0 0-.7.4l1.6 2.8A8.6 8.6 0 0 0 2 16.5h20a8.6 8.6 0 0 0-4.4-7zM7.5 14a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm9 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></symbol>
     <symbol id="i-apple" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.4 2-3.5 2-3.6a4.3 4.3 0 0 0-3.4-1.8c-1.4-.2-2.8.8-3.5.8s-1.8-.8-3-.8a4.4 4.4 0 0 0-3.8 2.3c-1.6 2.8-.4 7 1.2 9.3.8 1.1 1.7 2.4 2.9 2.3 1.2 0 1.6-.7 3-.7s1.8.7 3 .7 2-1.1 2.8-2.3a9.6 9.6 0 0 0 1.2-2.6 3.9 3.9 0 0 1-2.4-3.6zM14.1 5.5A4 4 0 0 0 15 2.6a4 4 0 0 0-2.6 1.4 3.8 3.8 0 0 0-1 2.8 3.4 3.4 0 0 0 2.7-1.3z"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
     <symbol id="i-gh" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7 3.6 3.6 0 0 1 .1-2.7s.8-.3 2.8 1a9.7 9.7 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1a3.6 3.6 0 0 1 .1 2.7 3.9 3.9 0 0 1 1 2.7c0 3.9-2.3 4.7-4.6 5 .4.3.7.9.7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></symbol>
     <symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
     <symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
   </svg>
 
-  <div class="wrap">
-    <header class="top">
+  <header class="top">
+    <div class="top-in">
       <a class="me" href="/"><i>SL</i>Sarath Lal</a>
+      <nav class="links" aria-label="Main"><a href="#apps">Apps</a><a href="#about">About</a><a href="https://github.com/sarathlal-12">GitHub</a></nav>
       <button class="icon-btn theme-toggle" type="button" aria-label="Switch light or dark">
         <svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg>
       </button>
-    </header>
+    </div>
+  </header>
 
-    <section class="hero rv">
-      <h1>Small apps that fix <span>everyday annoyances.</span></h1>
-      <p>Free, no account, and everything runs on your own devices. Pick one to see what it does and download it.</p>
+  <main>
+    <section class="wrap hero">
+      <div>
+        <p class="kicker fade" style="--dl:.05s"><span class="dot"></span>4 free apps · no account needed</p>
+        <h1 aria-label="Small apps that fix everyday annoyances.">
+          <span class="w" aria-hidden="true"><i style="--d:0">Small</i></span>
+          <span class="w" aria-hidden="true"><i style="--d:1">apps</i></span>
+          <span class="w" aria-hidden="true"><i style="--d:2">that</i></span>
+          <span class="w" aria-hidden="true"><i style="--d:3">fix</i></span>
+          <span class="w dim" aria-hidden="true"><i style="--d:4">everyday</i></span>
+          <span class="w dim" aria-hidden="true"><i style="--d:5">annoyances.</i></span>
+        </h1>
+        <p class="lead fade" style="--dl:.7s">Free, no account, and everything runs on your own devices. Spin the apps, pick one, and see what it does.</p>
+        <div class="ctas fade" style="--dl:.85s">
+          <a class="btn btn-primary" href="#apps">See the apps <svg aria-hidden="true"><use href="#i-down"/></svg></a>
+          <a class="btn btn-ghost" href="https://github.com/sarathlal-12"><svg aria-hidden="true"><use href="#i-gh"/></svg>GitHub</a>
+        </div>
+      </div>
+
+      <div class="stage" id="stage" aria-hidden="true">
+        <canvas></canvas>
+        <div class="stage-fallback">
+          <img src="/logo.png" alt=""><img src="/airbridge/icon.png" alt=""><img src="/light/icon.png" alt=""><img src="/byterake/icon.png" alt="">
+        </div>
+        <div class="stage-label"></div>
+        <p class="stage-hint">Drag to spin · click an app</p>
+      </div>
     </section>
 
+    <div class="marquee" aria-hidden="true">
+      <div class="track">
+        <span>Free forever</span><span>No account</span><span>Runs on your device</span><span>Open source</span><span>Windows</span><span>Android</span><span>iPhone</span>
+        <span>Free forever</span><span>No account</span><span>Runs on your device</span><span>Open source</span><span>Windows</span><span>Android</span><span>iPhone</span>
+      </div>
+    </div>
+
     <!-- Projects. To add one: copy an <a class="proj"> block, change the link, colour, logo and text. -->
-    <main class="projects">
-      <a class="proj rv" href="/spotvault/" style="--accent:#D63A35">
-        <div class="proj-head">
-          <img class="proj-logo" src="/logo.png" alt="" width="60" height="60">
-          <div><h2>SpotVault</h2><div class="tag">Your playlists, offline</div></div>
-        </div>
-        <p>Search any song and keep it offline on your phone, with live lyrics and Jam with friends. The Windows app saves whole playlists from Spotify, YouTube and SoundCloud.</p>
-        <div class="chips">
-          <span class="chip"><svg><use href="#i-win"/></svg>Windows</span>
-          <span class="chip"><svg><use href="#i-android"/></svg>Android</span>
-          <span class="chip"><svg><use href="#i-apple"/></svg>iPhone</span>
-        </div>
-        <span class="go">Open SpotVault <svg><use href="#i-arrow"/></svg></span>
-      </a>
+    <section class="wrap sec" id="apps">
+      <div class="sec-head rv">
+        <div><p class="eyebrow">The apps</p><h2>Pick one. <span>They're all free.</span></h2></div>
+        <p>Each one does one job well. Open a card to see how it works and download it.</p>
+      </div>
+      <div class="projects">
+        <a class="proj rv" href="/spotvault/" style="--accent:#F0605A">
+          <span class="num">01</span>
+          <div class="proj-head">
+            <img class="proj-logo" src="/logo.png" alt="" width="68" height="68">
+            <div><h3>SpotVault</h3><div class="tag">Your playlists, offline</div></div>
+          </div>
+          <p>Search any song and keep it offline on your phone, with live lyrics and Jam with friends. The Windows app saves whole playlists from Spotify, YouTube and SoundCloud.</p>
+          <div class="chips">
+            <span class="chip"><svg><use href="#i-win"/></svg>Windows</span>
+            <span class="chip"><svg><use href="#i-android"/></svg>Android</span>
+            <span class="chip"><svg><use href="#i-apple"/></svg>iPhone</span>
+          </div>
+          <span class="go">Open SpotVault <svg><use href="#i-arrow"/></svg></span>
+        </a>
 
-      <a class="proj rv" href="/airbridge/" style="--accent:#2F7BFF">
-        <div class="proj-head">
-          <img class="proj-logo" src="/airbridge/icon.png" alt="" width="60" height="60">
-          <div><h2>AirBridge</h2><div class="tag">Your phone's sound, on your PC</div></div>
-        </div>
-        <p>Play music and videos from your iPhone or Android phone through your Windows PC's speakers or headphones. iPhone uses AirPlay, Android uses Bluetooth.</p>
-        <div class="chips">
-          <span class="chip"><svg><use href="#i-win"/></svg>Windows</span>
-          <span class="chip"><svg><use href="#i-apple"/></svg>iPhone</span>
-          <span class="chip"><svg><use href="#i-android"/></svg>Android</span>
-        </div>
-        <span class="go">Open AirBridge <svg><use href="#i-arrow"/></svg></span>
-      </a>
+        <a class="proj rv" href="/airbridge/" style="--accent:#5B8FFF">
+          <span class="num">02</span>
+          <div class="proj-head">
+            <img class="proj-logo" src="/airbridge/icon.png" alt="" width="68" height="68">
+            <div><h3>AirBridge</h3><div class="tag">Your phone's sound, on your PC</div></div>
+          </div>
+          <p>Play music and videos from your iPhone or Android phone through your Windows PC's speakers or headphones. iPhone uses AirPlay, Android uses Bluetooth.</p>
+          <div class="chips">
+            <span class="chip"><svg><use href="#i-win"/></svg>Windows</span>
+            <span class="chip"><svg><use href="#i-apple"/></svg>iPhone</span>
+            <span class="chip"><svg><use href="#i-android"/></svg>Android</span>
+          </div>
+          <span class="go">Open AirBridge <svg><use href="#i-arrow"/></svg></span>
+        </a>
 
-      <a class="proj rv" href="/light/" style="--accent:#1A9A47">
-        <div class="proj-head">
-          <img class="proj-logo" src="/light/icon.png" alt="" width="60" height="60">
-          <div><h2>.light</h2><div class="tag">A Dynamic Island for Windows</div></div>
-        </div>
-        <p>A small island at the top of your screen with music, clipboard history, Claude Code status, prompt snippets, screen grabs and a file shelf, one hover away.</p>
-        <div class="chips">
-          <span class="chip"><svg><use href="#i-win"/></svg>Windows</span>
-        </div>
-        <span class="go">Open .light <svg><use href="#i-arrow"/></svg></span>
-      </a>
+        <a class="proj rv" href="/light/" style="--accent:#2CC254">
+          <span class="num">03</span>
+          <div class="proj-head">
+            <img class="proj-logo" src="/light/icon.png" alt="" width="68" height="68">
+            <div><h3>.light</h3><div class="tag">A Dynamic Island for Windows</div></div>
+          </div>
+          <p>A small island at the top of your screen with music, clipboard history, Claude Code status, prompt snippets, screen grabs and a file shelf, one hover away.</p>
+          <div class="chips">
+            <span class="chip"><svg><use href="#i-win"/></svg>Windows</span>
+          </div>
+          <span class="go">Open .light <svg><use href="#i-arrow"/></svg></span>
+        </a>
 
-      <a class="proj rv" href="/byterake/" style="--accent:#7C5CFF">
-        <div class="proj-head">
-          <img class="proj-logo" src="/byterake/icon.png" alt="" width="60" height="60">
-          <div><h2>Byterake</h2><div class="tag">Free up disk space, safely</div></div>
-        </div>
-        <p>An offline disk cleaner that shows what fills your drive, explains what is safe to clean, and removes only what you confirm, to the Recycle Bin by default.</p>
-        <div class="chips">
-          <span class="chip"><svg><use href="#i-win"/></svg>Windows</span>
-        </div>
-        <span class="go">Open Byterake <svg><use href="#i-arrow"/></svg></span>
-      </a>
+        <a class="proj rv" href="/byterake/" style="--accent:#9579FC">
+          <span class="num">04</span>
+          <div class="proj-head">
+            <img class="proj-logo" src="/byterake/icon.png" alt="" width="68" height="68">
+            <div><h3>Byterake</h3><div class="tag">Free up disk space, safely</div></div>
+          </div>
+          <p>An offline disk cleaner that shows what fills your drive, explains what is safe to clean, and removes only what you confirm, to the Recycle Bin by default.</p>
+          <div class="chips">
+            <span class="chip"><svg><use href="#i-win"/></svg>Windows</span>
+          </div>
+          <span class="go">Open Byterake <svg><use href="#i-arrow"/></svg></span>
+        </a>
 
-      <div class="proj soon rv">More apps on the way.</div>
-    </main>
-  </div>
+        <div class="proj soon rv">More apps on the way.</div>
+      </div>
+    </section>
+
+    <section class="wrap sec">
+      <div class="stats">
+        <div class="stat rv"><b data-count="4">4</b><span>apps, and counting</span></div>
+        <div class="stat rv"><b>0</b><span>accounts to sign up for</span></div>
+        <div class="stat rv"><b>$0</b><span>to download and use</span></div>
+        <div class="stat rv"><b data-count="100">100%</b><span>source on GitHub</span></div>
+      </div>
+    </section>
+
+    <section class="wrap sec" id="about">
+      <div class="about rv">
+        <p class="eyebrow" style="color:#C7C7CC">About</p>
+        <h2>Hi, I'm Sarath. <span>I build the small tools I wish I already had.</span></h2>
+        <p>When something on my phone or PC annoys me, I make an app that fixes it, then share it for free. Everything runs on your own devices, and all the code is on GitHub.</p>
+        <a class="btn btn-primary" href="https://github.com/sarathlal-12"><svg aria-hidden="true"><use href="#i-gh"/></svg>Follow on GitHub</a>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <div class="wrap foot">
@@ -200,8 +337,7 @@
   (function () {
     var root = document.documentElement;
     document.querySelector('.theme-toggle').addEventListener('click', function () {
-      var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-      root.dataset.theme = dark ? 'light' : 'dark';
+      root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
       try { localStorage.setItem('sv-theme', root.dataset.theme); } catch (e) {}
     });
     var els = document.querySelectorAll('.rv');
@@ -210,7 +346,19 @@
       es.forEach(function (e, i) { if (e.isIntersecting) { setTimeout(function () { e.target.classList.add('in'); }, i * 90); io.unobserve(e.target); } });
     }, { threshold: 0.12 });
     els.forEach(function (e) { io.observe(e); });
+    // count-up numbers
+    document.querySelectorAll('[data-count]').forEach(function (b) {
+      if (!root.classList.contains('motion')) return;
+      var end = +b.dataset.count, suf = b.textContent.replace(/[0-9]/g, ''), done = false;
+      new IntersectionObserver(function (es, o) {
+        if (!es[0].isIntersecting || done) return; done = true; o.disconnect();
+        var t0 = performance.now();
+        (function step(now) { var p = Math.min(1, (now - t0) / 1400); b.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suf; if (p < 1) requestAnimationFrame(step); })(t0);
+      }).observe(b);
+    });
   })();
   </script>
+  <script defer src="/fx/fx.js"></script>
+  <script type="module" src="/fx/hero.js"></script>
 </body>
 </html>

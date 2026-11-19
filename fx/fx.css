@@ -1,0 +1,59 @@
+/* Shared motion + glow layer for every page. Loaded by /fx/fx.js. */
+.fx-bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; display: block; }
+.fx-aurora { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
+.fx-aurora i { position: absolute; width: 62vmax; height: 62vmax; border-radius: 50%; opacity: .17; filter: blur(30px);
+  background: radial-gradient(circle, var(--c) 0%, transparent 62%); animation: fxFloat 24s ease-in-out infinite alternate; }
+.fx-aurora i:nth-child(1) { --c: var(--fx-a1, var(--accent)); left: -22vmax; top: -26vmax; }
+.fx-aurora i:nth-child(2) { --c: var(--fx-a2, var(--accent)); right: -26vmax; top: 18vh; opacity: .11; animation-duration: 30s; }
+.fx-aurora i:nth-child(3) { --c: var(--fx-a3, var(--accent)); left: 18vw; bottom: -38vmax; opacity: .09; animation-duration: 36s; }
+:root[data-theme="light"] .fx-aurora i { opacity: .13; }
+@keyframes fxFloat { to { transform: translate(7vmax, 5vmax) scale(1.18); } }
+
+.fx-progress { position: fixed; left: 0; top: 0; height: 3px; width: 100%; z-index: 300; pointer-events: none;
+  background: var(--fx-bar, var(--accent)); transform-origin: 0 50%; transform: scaleX(0); box-shadow: 0 0 14px var(--accent); }
+
+/* Glass cards with a light that follows the pointer */
+.fx .card, .fx .proj { isolation: isolate; position: relative;
+  background: color-mix(in srgb, var(--surface) 80%, transparent);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2);
+  transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .4s, border-color .4s; }
+.fx .card::before, .fx .proj::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background: radial-gradient(460px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%);
+  opacity: 0; transition: opacity .4s; }
+.fx .card:hover::before, .fx .proj:hover::before { opacity: 1; }
+.fx .card:hover, .fx .proj:hover { border-color: color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.fx .band .card { background: rgba(255,255,255,.05); }
+
+/* Buttons glow in the page colour */
+.fx .btn { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s; will-change: transform; }
+.fx .btn-accent { box-shadow: 0 12px 34px -10px var(--accent); }
+.fx .btn-accent:hover { box-shadow: 0 16px 44px -8px var(--accent); }
+
+/* Hero headline: the grey half fades into the page colour, words rise in */
+.fx .hero h1 > span { background: linear-gradient(95deg, var(--grey) 10%, var(--accent) 95%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.fx.motion .hero h1 { animation: fxRise 1.1s cubic-bezier(.2,.8,.2,1) both; }
+.fx.motion .hero .lead, .fx.motion .hero .ctas, .fx.motion .hero .meta { animation: fxRise 1.1s cubic-bezier(.2,.8,.2,1) both; }
+.fx.motion .hero .lead { animation-delay: .12s; } .fx.motion .hero .ctas { animation-delay: .22s; } .fx.motion .hero .meta { animation-delay: .3s; }
+@keyframes fxRise { from { opacity: 0; transform: translateY(28px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+
+/* Slightly stronger reveal on scroll */
+.fx.motion .rv { transform: translateY(34px) scale(.98); transition: opacity .9s ease, transform 1s cubic-bezier(.2,.8,.2,1); }
+.fx.motion .rv.in { transform: none; }
+
+@media (prefers-reduced-motion: reduce) { .fx-aurora i { animation: none; } }
+
+/* App pages: 3D icon in the hero */
+.fx-icon3d { width: 210px; height: 210px; margin: 4px auto 6px; position: relative; touch-action: pan-y; cursor: grab; }
+.fx-icon3d canvas { width: 100%; height: 100%; display: block; opacity: 0; transition: opacity .8s; }
+.fx-icon3d.ready canvas { opacity: 1; }
+@media (max-width: 600px) { .fx-icon3d { width: 160px; height: 160px; } }
+
+/* App pages: 3D scene that shows what the app does */
+.fx-show { max-width: 1120px; margin: 40px auto 0; padding: 0 20px; }
+.fx-show-in { position: relative; height: 480px; border-radius: 40px; border: 1px solid var(--line); overflow: hidden; touch-action: pan-y; cursor: grab;
+  background: radial-gradient(70% 70% at 50% 65%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%), color-mix(in srgb, var(--surface) 45%, transparent); }
+.fx-show-in canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; opacity: 0; transition: opacity 1s; }
+.fx-show-in.ready canvas { opacity: 1; }
+.fx-show-cap { position: absolute; left: 0; right: 0; top: 26px; margin: 0; text-align: center; font-size: clamp(20px, 3vw, 30px); font-weight: 800; letter-spacing: -0.03em; pointer-events: none; }
+.fx-show-hint { position: absolute; left: 0; right: 0; bottom: 16px; margin: 0; text-align: center; font-size: 12.5px; color: var(--grey); pointer-events: none; }
+@media (max-width: 600px) { .fx-show-in { height: 380px; border-radius: 28px; } }
