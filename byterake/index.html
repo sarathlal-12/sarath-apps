@@ -46,11 +46,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    /* Same look as the other app pages, with Byterake's mint accent. */
+    /* Same look as the other app pages, with Byterake's violet accent (the app mock-up keeps the app's own mint). */
     :root {
       --bg: #ECEAE6; --surface: #FFFFFF; --card: #F6F5F2;
       --text: #111111; --muted: #66635E; --grey: #8C8984; --line: rgba(0,0,0,0.09);
-      --accent: #0B8A57; --accent-ink: #FFFFFF; --ink: #111111; --ink-text: #F2EFE8;
+      --accent: #6D4AFF; --accent-ink: #FFFFFF; --ink: #111111; --ink-text: #F2EFE8;
       --shadow: 0 24px 60px rgba(17,17,17,0.12); --shadow-sm: 0 10px 28px rgba(17,17,17,0.08);
       color-scheme: light;
     }
@@ -58,7 +58,7 @@
       :root:not([data-theme="light"]) {
         --bg: #0E0E0F; --surface: #1C1C1E; --card: #19191B;
         --text: #F2EFE8; --muted: #A09C96; --grey: #77736E; --line: rgba(255,255,255,0.1);
-        --accent: #4BE3A4; --accent-ink: #0E0E0F; --ink: #F2EFE8; --ink-text: #111111;
+        --accent: #A78BFA; --accent-ink: #0E0E0F; --ink: #F2EFE8; --ink-text: #111111;
         --shadow: 0 24px 60px rgba(0,0,0,0.5); --shadow-sm: 0 10px 28px rgba(0,0,0,0.35);
         color-scheme: dark;
       }
@@ -66,7 +66,7 @@
     :root[data-theme="dark"] {
       --bg: #0E0E0F; --surface: #1C1C1E; --card: #19191B;
       --text: #F2EFE8; --muted: #A09C96; --grey: #77736E; --line: rgba(255,255,255,0.1);
-      --accent: #4BE3A4; --accent-ink: #0E0E0F; --ink: #F2EFE8; --ink-text: #111111;
+      --accent: #A78BFA; --accent-ink: #0E0E0F; --ink: #F2EFE8; --ink-text: #111111;
       --shadow: 0 24px 60px rgba(0,0,0,0.5); --shadow-sm: 0 10px 28px rgba(0,0,0,0.35);
       color-scheme: dark;
     }
@@ -209,7 +209,7 @@
     .list h3 { font-size: 18px; margin-bottom: 14px; }
     .list ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 9px; color: #C9C5BE; font-size: 15px; }
     .list li { display: flex; gap: 10px; align-items: center; }
-    .list li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; flex: none; background: #4BE3A4; }
+    .list li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; flex: none; background: #A78BFA; }
     .list.no li::before { background: #77736E; }
     @media (max-width: 900px) { .lists { grid-template-columns: 1fr; } .band { margin: 0 8px; border-radius: 28px; } }
 
@@ -379,7 +379,7 @@
     <section class="band" id="safety">
       <div class="wrap">
         <div class="rv">
-          <div class="eyebrow" style="color:#4BE3A4">Safety</div>
+          <div class="eyebrow" style="color:#A78BFA">Safety</div>
           <h2>What it cleans, <span>and what it never touches.</span></h2>
         </div>
         <div class="lists">
