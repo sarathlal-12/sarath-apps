@@ -93,7 +93,7 @@
 .q-pic::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(115deg, rgba(255,255,255,.06) 0 2px, transparent 2px 14px); }
 .q-pic img { width: 26%; max-width: 110px; aspect-ratio: 1; border-radius: 24%; box-shadow: 0 20px 40px -10px rgba(0,0,0,.6); transition: transform .6s cubic-bezier(.2,.8,.2,1); position: relative; z-index: 1; }
 .q-item:hover .q-pic img { transform: rotate(-8deg) scale(1.1); }
-.q-pic i { position: absolute; left: 14px; bottom: 12px; z-index: 1; font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.85); }
+.q-pic > i { position: absolute; left: 14px; bottom: 12px; z-index: 2; font-style: normal; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.85); }
 .q-text { margin: 0; color: #55524D; font-size: 15.5px; }
 .q-chips { display: flex; flex-wrap: wrap; gap: 6px; }
 .q-chips span { font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 99px; background: rgba(0,0,0,.05); border: 1px solid rgba(0,0,0,.08); color: #333; }

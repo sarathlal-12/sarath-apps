@@ -117,6 +117,77 @@
     });
   }
 
+  // ---------------- small animated scenes for the "Made for" pictures ----------------
+  // Each scene is a tiny made-up screen. Parts with sc-pop / sc-up / sc-type / sc-fill animate in
+  // when the item scrolls into view (.q-item.in); loops (eq bars, plane, road) always run.
+  function at(l, t, w, extra) { return 'style="left:' + l + '%;top:' + t + '%;' + (w ? 'width:' + w + '%;' : '') + (extra || '') + '"'; }
+  function bars(ws, d0, cls) { return ws.map(function (w, i) { return '<i class="sc-l ' + (cls || 'sc-type') + '" style="--w:' + w + '%;--d:' + (d0 + i * 0.18).toFixed(2) + 's"></i>'; }).join(''); }
+  var EQ = '<span class="sc-eq"><i></i><i></i><i></i><i></i></span>';
+  var SCENES = {
+    // SpotVault
+    'sv-flight': '<span class="sc-fly">✈</span>' +
+      '<div class="sc-c sc-up" ' + at(20, 26, 60) + '><div class="sc-head"><span>✈ Airplane mode</span><small>Wi-Fi off</small></div>' +
+      '<div class="sc-row"><span class="sc-art"></span><span class="sc-t"><b>Low Tide Radio</b><small>Saved offline ✓</small></span>' + EQ + '</div>' +
+      '<div class="sc-bar"><i class="sc-fill" style="--w:62%;--d:.4s"></i></div></div>',
+    'sv-road': '<div class="sc-road"></div>' +
+      '<div class="sc-c sc-up" ' + at(20, 12, 60) + '><div class="sc-head"><span><span class="sc-sig"><i></i><i></i><i></i><i></i></span> No service</span><small class="sc-bad">✕</small></div>' +
+      '<div class="sc-row"><span class="sc-art"></span><span class="sc-t"><b>Still playing</b><small>Low Tide Radio</small></span>' + EQ + '</div></div>',
+    'sv-lyrics': '<div class="sc-c sc-up sc-lyc" ' + at(18, 12, 64) + '><p>Windows down on the coast road</p><p>No bars left on my phone</p><p>But the song keeps on playing</p><p>Saved it before we left home</p></div>',
+    'sv-jam': '<div class="sc-c sc-up" ' + at(30, 16, 40) + '><div class="sc-head"><span><span class="sc-dot"></span> Jam</span><small>3 listening</small></div>' +
+      '<small class="sc-mut">Up next</small><div class="sc-q"><span class="sc-art s"></span>Low Tide Radio</div><div class="sc-q"><span class="sc-art s b"></span>Paper Kites at Noon</div></div>' +
+      '<span class="sc-av sc-pop" ' + at(13, 22, 0, '--d:.4s;background:#F0605A') + '>A</span>' +
+      '<span class="sc-av sc-pop" ' + at(77, 16, 0, '--d:.7s;background:#5B8FFF') + '>M</span>' +
+      '<span class="sc-av sc-pop" ' + at(75, 58, 0, '--d:1s;background:#30D158') + '>R</span>',
+    // AirBridge
+    'ab-desk': '<span class="sc-spk sc-up" ' + at(9, 20, 0, '--d:.1s') + '><i></i><i class="b"></i></span><span class="sc-wave" ' + at(12, 30) + '></span>' +
+      '<span class="sc-spk sc-up" ' + at(77, 20, 0, '--d:.2s') + '><i></i><i class="b"></i></span><span class="sc-wave r" ' + at(80, 30) + '></span>' +
+      '<div class="sc-ph sc-pop" ' + at(42, 14, 16, '--d:.35s') + '><small>AirBridge</small><b>Playing on PC</b>' + EQ + '</div>',
+    'ab-night': '<span class="sc-moon"></span>' +
+      '<div class="sc-vid sc-up" ' + at(14, 16, 52) + '><span class="sc-play">▶</span><div class="sc-bar"><i class="sc-fill" style="--w:38%;--d:.5s"></i></div></div>' +
+      '<span class="sc-p sc-pop" ' + at(46, 66, 0, '--d:.8s') + '><span class="sc-dot"></span> Sound on your PC headphones</span>',
+    'ab-podcast': '<div class="sc-c light sc-up" ' + at(10, 12, 58) + '><div class="sc-win"><i></i><i></i><i></i> Report.xlsx</div>' + bars([90, 70, 85, 55], 0.3) + '</div>' +
+      '<div class="sc-c sc-pop" ' + at(52, 52, 40, '--d:.7s') + '><div class="sc-head"><span><span class="sc-dot"></span> Podcast</span><small>24:10</small></div><span class="sc-eq wide"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>',
+    'ab-phones': '<div class="sc-c sc-up" ' + at(7, 12, 30) + '><b>iPhone</b><small class="sc-mut">AirPlay</small></div>' +
+      '<div class="sc-c sc-up" ' + at(7, 54, 30, '--d:.2s') + '><b>Android</b><small class="sc-mut">Bluetooth</small></div>' +
+      '<span class="sc-flow" ' + at(39, 26, 24) + '></span><span class="sc-flow" ' + at(39, 66, 24, 'transform:rotate(-14deg);transform-origin:right') + '></span>' +
+      '<div class="sc-c sc-pop" ' + at(64, 30, 29, '--d:.5s') + '><b>Your PC</b>' + EQ + '</div>',
+    // .light
+    'li-clip': '<div class="sc-isl sc-pop" ' + at(24, 8, 52) + '><small class="sc-mut">Clipboard</small>' +
+      '<div class="sc-q sc-up" style="--d:.5s">Meeting at 4</div><div class="sc-q sc-up" style="--d:.7s">git push origin main</div><div class="sc-q sc-up" style="--d:.9s"><span class="sc-sw"></span>#7C5CFF</div></div>',
+    'li-claude': '<div class="sc-c light sc-up" ' + at(10, 30, 62) + '><div class="sc-win"><i></i><i></i><i></i> main.py</div>' + bars([60, 82, 45, 70], 0.3, 'sc-type code') + '</div>' +
+      '<div class="sc-isl pill sc-pop" ' + at(26, 9, 48, '--d:1s') + '><span class="sc-dot pulse"></span> Claude Code · Done ✓</div>',
+    'li-music': '<div class="sc-isl sc-pop" ' + at(22, 12, 56) + '><div class="sc-row"><span class="sc-art"></span><span class="sc-t"><b>Low Tide Radio</b><small>Now playing</small></span>' + EQ + '</div>' +
+      '<div class="sc-ctl"><span>⏮</span><span class="big">❚❚</span><span>⏭</span></div><div class="sc-bar"><i class="sc-fill" style="--w:45%;--d:.5s"></i></div></div>',
+    'li-grab': '<div class="sc-c light sc-up" ' + at(12, 12, 64) + '><div class="sc-win"><i></i><i></i><i></i> Browser</div>' + bars([80, 60, 90, 50, 70], 0.2, 'sc-st') + '</div>' +
+      '<span class="sc-sel" ' + at(30, 34) + '></span>' +
+      '<span class="sc-p sc-pop" ' + at(56, 70, 0, '--d:1.5s') + '>✓ Copied to clipboard</span>',
+    // Byterake
+    'br-full': '<div class="sc-c sc-up" ' + at(16, 22, 68) + '><div class="sc-head"><span>Local Disk (C:)</span><small class="sc-bad">2.1 GB free</small></div>' +
+      '<div class="sc-bar red"><i class="sc-fill" style="--w:97%;--d:.3s"></i></div></div>' +
+      '<span class="sc-p warn sc-pop" ' + at(56, 9, 0, '--d:1.1s') + '>⚠ Almost full</span>',
+    'br-explain': '<div class="sc-c sc-up" ' + at(5, 14, 52) + '>' +
+      '<div class="sc-li"><span>Temp files</span><b>3.4 GB</b><em>Safe</em></div><div class="sc-li"><span>Old downloads</span><b>6.1 GB</b><em class="chk">Review</em></div><div class="sc-li"><span>Browser cache</span><b>1.8 GB</b><em>Safe</em></div></div>' +
+      '<div class="sc-c light sc-tip sc-pop" ' + at(60, 38, 35, '--d:.9s') + '><b>Temp files</b><small>Leftovers apps made and no longer need. Safe to clean.</small></div>',
+    'br-bin': '<div class="sc-c sc-up" ' + at(10, 22, 36) + '><b>3 items</b><small class="sc-mut">13.5 GB cleaned</small><span class="sc-btn">↺ Restore</span></div>' +
+      '<span class="sc-doc" ' + at(66, 4, 0, '--d:0s') + '></span><span class="sc-doc" ' + at(70, 4, 0, '--d:.8s') + '></span><span class="sc-doc" ' + at(62, 4, 0, '--d:1.6s') + '></span>' +
+      '<span class="sc-bin" ' + at(58, 44) + '><i></i></span>',
+    'br-offline': '<div class="sc-c sc-up" ' + at(20, 18, 60) + '><div class="sc-head"><span>Byterake</span><span class="sc-p off"><span class="sc-dot"></span> Offline</span></div>' +
+      '<b class="sc-big">Nothing leaves your PC.</b><small class="sc-mut">No account · No upload · No internet needed</small></div>',
+    // Utter
+    'ut-email': '<span class="sc-mic sc-pop" ' + at(8, 30) + '><i></i></span>' +
+      '<div class="sc-c light sc-up" ' + at(30, 12, 60, '--d:.2s') + '><small class="sc-mut">To: Sam</small><b class="sc-type-t">Hi Sam,</b>' + bars([95, 88, 92, 60], 0.6) + '</div>',
+    'ut-chat': '<span class="sc-p sc-pop" ' + at(8, 8) + '><span class="sc-dot"></span> Casual tone</span>' +
+      '<span class="sc-bub me sc-pop" ' + at(52, 22, 0, '--d:.3s') + '>omw, 5 mins</span>' +
+      '<span class="sc-bub sc-pop" ' + at(14, 44, 0, '--d:.9s') + '>nice, grabbing coffee</span>' +
+      '<span class="sc-bub me sc-pop" ' + at(56, 66, 0, '--d:1.5s') + '>sounds good</span>',
+    'ut-dict': '<div class="sc-c sc-up" ' + at(16, 14, 68) + '><div class="sc-head"><span>Your dictionary</span><small>3 words</small></div>' +
+      '<div class="sc-fix sc-up" style="--d:.4s"><s>kubernetes</s>→<b>Kubernetes</b><em>✓</em></div>' +
+      '<div class="sc-fix sc-up" style="--d:.7s"><s>sarath</s>→<b>Sarath</b><em>✓</em></div>' +
+      '<div class="sc-fix sc-up" style="--d:1s"><s>next js</s>→<b>Next.js</b><em>✓</em></div></div>',
+    'ut-notes': '<div class="sc-c light sc-up" ' + at(12, 12, 54) + '><b>Notes</b>' + bars([90, 75, 85, 50], 0.4) + '</div>' +
+      '<span class="sc-p sc-pop" ' + at(52, 64, 0, '--d:1.1s') + '><span class="sc-dot"></span> On this PC · no cloud</span>',
+  };
+
   // ---------------- sliding sheet ----------------
   function sheet() {
     var S = cfg.sheet; if (!S) return;
@@ -128,7 +199,7 @@
         return '<' + tag + ' class="q-item"' + (it.href ? ' href="' + it.href + '"' : '') + ' style="--c:' + (it.accent || A) + '">' +
           '<p class="q-made">' + esc(it.kicker || 'Made for') + '</p>' +
           '<div class="q-item-h"><h3>' + esc(it.title) + '</h3><span>' + pad(i) + '</span></div>' +
-          '<div class="q-pic">' + (it.icon ? '<img src="' + it.icon + '" alt="">' : '') + (it.tag ? '<i>' + esc(it.tag) + '</i>' : '') + '</div>' +
+          '<div class="q-pic' + (SCENES[it.scene] ? ' has-sc' : '') + '">' + (SCENES[it.scene] ? '<div class="sc" aria-hidden="true">' + SCENES[it.scene] + '</div>' : it.icon ? '<img src="' + it.icon + '" alt="">' : '') + (it.tag ? '<i>' + esc(it.tag) + '</i>' : '') + '</div>' +
           '<p class="q-text">' + esc(it.text) + '</p>' +
           (it.chips ? '<div class="q-chips">' + it.chips.map(function (c) { return '<span>' + esc(c) + '</span>'; }).join('') + '</div>' : '') +
           (it.href ? '<span class="q-go">' + esc(it.go || 'Open') + ' <span aria-hidden="true">→</span></span>' : '') +

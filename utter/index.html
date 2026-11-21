@@ -35,6 +35,18 @@
     "codeRepository": "https://github.com/sarathlal-12/utter"
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": "Utter in 60 seconds",
+    "description": "Free, offline voice typing for Windows: hold Ctrl + Win, talk, and clean text appears at your cursor. Removes ums, fixes corrections, fits the app's tone.",
+    "thumbnailUrl": "https://sarath-apps.vercel.app/utter/promo-cover.jpg",
+    "contentUrl": "https://sarath-apps.vercel.app/utter/promo.mp4",
+    "uploadDate": "2026-11-21",
+    "duration": "PT1M"
+  }
+  </script>
 
   <script>
     var t = null; try { t = localStorage.getItem('sv-theme'); } catch (e) {} document.documentElement.dataset.theme = (t === 'light' || t === 'dark') ? t : 'dark';
@@ -128,6 +140,7 @@
     .desk { position: relative; border-radius: 8px; overflow: hidden; height: 430px; background: linear-gradient(160deg, #2B2620, #14130F 60%); }
     .base { height: 16px; margin: 0 -40px; border-radius: 0 0 22px 22px; background: linear-gradient(#CFCBC4, #9F9B94); }
     .base::after { content: ""; display: block; width: 120px; height: 6px; margin: 0 auto; border-radius: 0 0 8px 8px; background: #8A867F; }
+    @media (max-width: 600px) { .base { margin: 0; } }
     .chat { position: absolute; left: 7%; right: 7%; top: 22px; bottom: 104px; border-radius: 12px; background: #1B1C20; border: 1px solid #2C2E34; display: flex; flex-direction: column; color: #E9E9EC; font-size: 13px; overflow: hidden; }
     .chat-bar { height: 36px; display: flex; align-items: center; gap: 10px; padding: 0 14px; border-bottom: 1px solid #2C2E34; color: #A6A8B0; font-size: 12px; }
     .chat-bar b { color: #E9E9EC; }
@@ -222,10 +235,26 @@
     .foot nav { display: flex; gap: 18px; flex-wrap: wrap; }
     .foot a { text-decoration: none; } .foot a:hover { color: var(--text); }
     .center { text-align: center; } .center .lead { margin: 16px auto 0; }
+    /* watch: the vertical promo video in a phone-shaped frame, text beside it */
+    .watch { padding-top: 60px; padding-bottom: 20px; }
+    .watch-in { display: grid; grid-template-columns: 340px 1fr; gap: 64px; align-items: center; max-width: 900px; margin: 0 auto; }
+    .watch-frame { border-radius: 34px; padding: 8px; background: linear-gradient(145deg, #2A2A2C, #0B0B0C); box-shadow: var(--shadow); }
+    .watch-frame video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; border-radius: 27px; background: #0E0E0F; }
+    .watch-text h2 { margin-bottom: 14px; }
+    .watch-text .lead { margin: 0 0 18px; }
+    .watch-list { margin: 0 0 26px; padding: 0; list-style: none; display: grid; gap: 9px; font-size: 15px; }
+    .watch-list li { display: flex; gap: 10px; align-items: center; }
+    .watch-list li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none; }
+    @media (max-width: 860px) {
+      .watch-in { grid-template-columns: 1fr; gap: 30px; text-align: center; }
+      .watch-frame { width: min(320px, 100%); margin: 0 auto; }
+      .watch-text .lead { margin: 0 auto 18px; }
+      .watch-list { justify-items: center; }
+    }
   </style>
   <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
   <link rel="stylesheet" href="/fx/fx.css">
-  <script type="application/json" id="fx-cfg">{"loader": {"top": "Talk. It types. Offline.", "kicker": "Your voice keyboard is on its way", "title": "Warming up <em>the mic.</em>", "sub": "Hold a key, speak, and clean text lands at your cursor.", "status": "Loading the speech model…", "cards": [{"icon": "/utter/icon.png", "title": "Utter", "sub": "Talk. It types. Offline.", "foot": "Utter"}, {"mark": "⌨", "title": "Hold", "sub": "Ctrl + Win", "foot": "Utter"}, {"mark": "✓", "title": "Clean", "sub": "No ums, no typos", "foot": "Utter"}]}, "float": [{"mark": "⌨", "title": "Hold a key", "sub": "Ctrl + Win, anywhere", "foot": "Utter"}, {"mark": "◉", "title": "Speak", "sub": "Like you'd talk to a friend", "foot": "Utter"}, {"mark": "✓", "title": "Clean text", "sub": "Ums gone, lists formatted", "foot": "Utter"}, {"mark": "⌁", "title": "Offline", "sub": "Nothing leaves your PC", "foot": "Utter"}], "lines": ["Hold the keys.", "Say it once.", "Let go.", "It's typed."], "linesCard": {"icon": "/utter/icon.png", "title": "Utter", "sub": "Free offline voice typing for Windows.", "foot": "Free"}, "sheet": {"big": "UT", "title": "Type at the speed <em>of talking.</em>", "label": "Made for", "items": [{"title": "Long emails", "tag": "Polished", "text": "Say it like you'd explain it. Utter writes it like you'd send it.", "icon": "/utter/icon.png"}, {"title": "Quick chats", "tag": "Casual", "text": "Slack, Discord and WhatsApp get a relaxed tone, no stiff full stops.", "icon": "/utter/icon.png"}, {"title": "Your own words", "tag": "Dictionary", "text": "Names and jargon spelled your way, every time.", "icon": "/utter/icon.png"}, {"title": "Private notes", "tag": "Offline", "text": "Speech recognition runs on your PC. No account, no cloud, no API keys.", "icon": "/utter/icon.png"}]}, "cta": {"label": "Download Utter", "href": "#download", "icon": "/utter/icon.png", "hideIn": ["#download", "#top"]}}</script>
+  <script type="application/json" id="fx-cfg">{"loader": {"top": "Talk. It types. Offline.", "kicker": "Your voice keyboard is on its way", "title": "Warming up <em>the mic.</em>", "sub": "Hold a key, speak, and clean text lands at your cursor.", "status": "Loading the speech model…", "cards": [{"icon": "/utter/icon.png", "title": "Utter", "sub": "Talk. It types. Offline.", "foot": "Utter"}, {"mark": "⌨", "title": "Hold", "sub": "Ctrl + Win", "foot": "Utter"}, {"mark": "✓", "title": "Clean", "sub": "No ums, no typos", "foot": "Utter"}]}, "float": [{"mark": "⌨", "title": "Hold a key", "sub": "Ctrl + Win, anywhere", "foot": "Utter"}, {"mark": "◉", "title": "Speak", "sub": "Like you'd talk to a friend", "foot": "Utter"}, {"mark": "✓", "title": "Clean text", "sub": "Ums gone, lists formatted", "foot": "Utter"}, {"mark": "⌁", "title": "Offline", "sub": "Nothing leaves your PC", "foot": "Utter"}], "lines": ["Hold the keys.", "Say it once.", "Let go.", "It's typed."], "linesCard": {"icon": "/utter/icon.png", "title": "Utter", "sub": "Free offline voice typing for Windows.", "foot": "Free"}, "sheet": {"big": "UT", "title": "Type at the speed <em>of talking.</em>", "label": "Made for", "items": [{"title": "Long emails", "tag": "Polished", "text": "Say it like you'd explain it. Utter writes it like you'd send it.", "icon": "/utter/icon.png", "scene": "ut-email"}, {"title": "Quick chats", "tag": "Casual", "text": "Slack, Discord and WhatsApp get a relaxed tone, no stiff full stops.", "icon": "/utter/icon.png", "scene": "ut-chat"}, {"title": "Your own words", "tag": "Dictionary", "text": "Names and jargon spelled your way, every time.", "icon": "/utter/icon.png", "scene": "ut-dict"}, {"title": "Private notes", "tag": "Offline", "text": "Speech recognition runs on your PC. No account, no cloud, no API keys.", "icon": "/utter/icon.png", "scene": "ut-notes"}]}, "cta": {"label": "Download Utter", "href": "#download", "icon": "/utter/icon.png", "hideIn": ["#download", "#top"]}}</script>
   <script defer src="/fx/fx.js"></script>
   <script defer src="/fx/quest.js"></script>
   <script type="module" src="/fx/app3d.js"></script>
@@ -253,7 +282,7 @@
     <div class="nav-in">
       <a class="brand" href="#top" aria-label="Utter home"><img src="/utter/icon.png" alt="" width="32" height="32"><span>Ut<span>ter</span></span></a>
       <nav class="nav-links" aria-label="Main">
-        <a href="/">All projects</a><a href="#why">Why Utter</a><a href="#how">How to use</a><a href="#cleanup">Cleanup</a><a href="#download">Download</a><a href="#faq">FAQ</a>
+        <a href="/">All projects</a><a href="#watch">Video</a><a href="#why">Why Utter</a><a href="#how">How to use</a><a href="#cleanup">Cleanup</a><a href="#download">Download</a><a href="#faq">FAQ</a>
       </nav>
       <button class="icon-btn theme-toggle" type="button" aria-label="Switch light or dark">
         <svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg>
@@ -290,6 +319,28 @@
           </div>
         </div>
         <div class="base"></div>
+      </div>
+    </section>
+
+    <section class="wrap watch" id="watch">
+      <div class="watch-in">
+        <div class="watch-frame rv">
+          <video controls playsinline preload="metadata" poster="/utter/promo-cover.jpg" width="720" height="1280" aria-label="Utter promo video, 60 seconds, music only">
+            <source src="/utter/promo.mp4" type="video/mp4">
+            Your browser can't play this video. <a href="/utter/promo.mp4">Download it</a>.
+          </video>
+        </div>
+        <div class="watch-text rv">
+          <div class="eyebrow">Watch</div>
+          <h2>Utter <span>in 60 seconds.</span></h2>
+          <p class="lead">Hold Ctrl + Win, talk, and clean text lands at your cursor. Ums and corrections are cleaned up, lists become lists, and the tone fits the app, all without the internet.</p>
+          <ul class="watch-list">
+            <li>One shortcut, in any app that takes typing</li>
+            <li>Casual in chat, polished in email</li>
+            <li>Free, offline, no account</li>
+          </ul>
+          <a class="btn btn-accent" href="#download">Download for Windows</a>
+        </div>
       </div>
     </section>
 
