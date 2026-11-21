@@ -53,3 +53,13 @@
 - Downloads (v1.0.0): https://github.com/sarathlal-12/byterake/releases/tag/v1.0.0
 - Price: free, MIT license. No account; nothing leaves the PC.
 - Platforms: Windows 10 and 11, 64-bit (installer).
+
+# Utter
+
+> Free, offline voice dictation for Windows, similar to Wispr Flow. Hold Ctrl+Win (or any custom shortcut), speak, and cleaned-up text is pasted at the cursor in any app and kept on the clipboard; tap Space while holding for hands-free mode. Removes filler words and stutters, applies spoken corrections ("at 2, actually 3"), "scratch that", "new line", turns spoken lists into numbered lists, and adapts tone per app (casual in chat apps, polished in email, untouched in code editors). Personal dictionary, replacements, voice snippets, and a searchable local history deleted after 30 days. Speech recognition uses whisper.cpp (tiny/base English models) and optional cleanup uses Qwen2.5-0.5B via llama.cpp, both running locally; first launch picks models for the PC's RAM and CPU, with a Fast Mode for older machines. No account, no API keys, no internet.
+
+- Website: https://sarath-apps.vercel.app/utter/
+- Source code: https://github.com/sarathlal-12/utter
+- Downloads (v0.2.0): https://github.com/sarathlal-12/utter/releases/tag/v0.2.0
+- Price: free, MIT license. No account; nothing leaves the PC.
+- Platforms: Windows 10 and 11, 64-bit (installer, per-user). English only for now.

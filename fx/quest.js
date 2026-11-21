@@ -148,6 +148,7 @@
     airbridge: { name: 'AirBridge', icon: '/airbridge/icon.png', c: '#5B8FFF', dev: 'phone' },
     light: { name: '.light', icon: '/light/icon.png', c: '#30D158', dev: 'pc' },
     byterake: { name: 'Byterake', icon: '/byterake/icon.png', c: '#9579FC', dev: 'pc' },
+    utter: { name: 'Utter', icon: '/utter/icon.png', c: '#F5A623', dev: 'pc' },
   };
   var LYRICS = ['Windows down on the coast road', 'No bars left on my phone', 'But the song keeps on playing', 'Saved it before we left home', 'Every word right where it should be', 'No signal, just you and me', 'Turn it up, the tide is low', 'Some songs never need to load'];
 
@@ -180,6 +181,12 @@
         '<div class="br-drive"><div class="br-row"><b>Local Disk (C:)</b><span class="br-free">18.0 GB free</span></div><div class="br-bar"><i></i></div></div>' +
         '<div class="br-list"></div><p class="br-msg">Find out what is filling your drive.</p>' +
         '<button type="button" class="q-btn br-go">Scan drive</button></div></div>' + taskbar('/byterake/icon.png') + '</div>',
+      utter: '<div class="pc-desk ut-desk"><div class="pc-win ut-win"><span class="win-bar"><i></i><i></i><i></i>Mail · New message<span class="win-ctl">─ ▢ ✕</span></span><div class="ut-body">' +
+        '<div class="ut-field"><span>To</span>team@example.com</div><div class="ut-field"><span>Subject</span>Friday review</div>' +
+        '<div class="ut-text"><span class="ut-typed"></span><span class="ut-caret"></span></div>' +
+        '<p class="ut-said"></p>' +
+        '<button type="button" class="q-btn ut-go">Hold Ctrl + Win and talk</button></div></div>' +
+        '<span class="ut-pill"><i></i><i></i><i></i><i></i><i></i></span>' + taskbar('/utter/icon.png') + '</div>',
     };
     function taskbar(icon) {
       return '<div class="pc-task"><span class="pc-start"><i></i><i></i><i></i><i></i></span><span class="pc-search"></span><img src="' + icon + '" alt=""><span class="pc-clock">12:41</span></div>';
@@ -283,6 +290,27 @@
         } else if (state === 4) reset();
       });
       stop.byterake = reset;
+      reset();
+    })();
+
+    // Utter: hold to talk, the messy speech comes out as clean text
+    var ut = sec.querySelector('[data-k="utter"].q-pane');
+    if (ut) (function () {
+      var btn = ut.querySelector('.ut-go'), typed = ut.querySelector('.ut-typed'), said = ut.querySelector('.ut-said'), pill = ut.querySelector('.ut-pill'), timers = [], busy = false;
+      var RAW = '“um hi team so the review is at 2… actually 3 on Friday, uh, see you there”';
+      var OUT = 'Hi team, the review is at 3 on Friday. See you there.';
+      function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+      function reset() { timers.forEach(clearTimeout); timers = []; busy = false; typed.textContent = ''; said.textContent = 'What you say comes out clean.'; pill.className = 'ut-pill'; btn.disabled = false; btn.textContent = 'Hold Ctrl + Win and talk'; }
+      btn.addEventListener('click', function () {
+        if (busy) return; busy = true; btn.disabled = true; typed.textContent = ''; said.textContent = '';
+        pill.className = 'ut-pill listen'; btn.textContent = 'Listening…';
+        for (var i = 1; i <= RAW.length; i++) (function (n) { later(function () { said.textContent = RAW.slice(0, n); }, n * 30); })(i);
+        var t = RAW.length * 30 + 300;
+        later(function () { pill.className = 'ut-pill busy'; btn.textContent = 'Cleaning up…'; }, t);
+        for (var j = 1; j <= OUT.length; j++) (function (n) { later(function () { typed.textContent = OUT.slice(0, n); }, t + 600 + n * 14); })(j);
+        later(function () { pill.className = 'ut-pill done'; busy = false; btn.disabled = false; btn.textContent = 'Try again'; }, t + 700 + OUT.length * 14);
+      });
+      stop.utter = reset;
       reset();
     })();
   }
