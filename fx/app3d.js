@@ -15,6 +15,7 @@ const CAPTIONS = {
   airbridge: 'Your phone’s sound, beamed to your PC.',
   island: 'Lives at the top of your screen.',
   platter: 'Rakes out the junk. Nothing else.',
+  mic: 'You talk. It types.',
 };
 
 function roundMask(r = 58) {
@@ -62,7 +63,7 @@ function makeStage(el, { z = 9, y = 0, idle = 0.25 } = {}) {
   new MutationObserver(() => { const c = accentHex(); s.accentMats.forEach(m => m.color.set(c)); if (s.onTheme) s.onTheme(); })
     .observe(root, { attributes: true, attributeFilter: ['data-theme'] });
 
-  const clock = new THREE.Clock(); let t = 0;
+  const clock = new THREE.Clock(); let t = +(new URLSearchParams(location.search).get('t3d')) || 0;   // ?t3d=5 starts 5 s in (for checking stills)
   function frame() {
     requestAnimationFrame(frame);
     if (!visible || document.hidden) { clock.getDelta(); return; }
@@ -303,8 +304,100 @@ async function platter(s) {
   };
 }
 
+// ---------- Utter: a mic sends out sound rings; words fly over and stack up as lines on a document ----------
+async function mic(s) {
+  const A = accentHex();
+  const amber = glossy(A, { metalness: 0.45, roughness: 0.25, emissive: new THREE.Color(A), emissiveIntensity: 0.08 }); s.accentMats.push(amber);
+  const dark = new THREE.MeshPhysicalMaterial({ color: 0x1b1712, metalness: 0.8, roughness: 0.3, clearcoat: 0.6 });
+
+  // microphone on a little stand
+  const micG = new THREE.Group(); micG.position.set(-2.7, -0.2, 0.3); micG.rotation.z = -0.18;
+  const head = new THREE.Mesh(new THREE.CapsuleGeometry(0.5, 0.75, 12, 32), amber); head.position.y = 0.75;
+  const bands = [0.45, 0.75, 1.05].map(y => { const r = new THREE.Mesh(new THREE.TorusGeometry(0.505, 0.03, 10, 64), dark); r.rotation.x = Math.PI / 2; r.position.y = y; return r; });
+  const yoke = new THREE.Mesh(new THREE.TorusGeometry(0.7, 0.05, 12, 48, Math.PI), dark); yoke.rotation.z = Math.PI; yoke.position.y = 0.55;
+  const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.9, 16), dark); stem.position.y = -0.6;
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(0.62, 0.7, 0.14, 48), dark); base.position.y = -1.08;
+  micG.add(head, ...bands, yoke, stem, base);
+
+  // floating document with a title bar
+  const doc = new THREE.Group(); doc.position.set(2.3, 0.15, -0.2); doc.rotation.set(-0.05, -0.38, 0.03);
+  const paper = new THREE.Mesh(new RoundedBoxGeometry(2.7, 3.3, 0.08, 4, 0.12), new THREE.MeshPhysicalMaterial({ color: 0xfff6e6, roughness: 0.5, clearcoat: 0.4 }));
+  const barMat = new THREE.MeshBasicMaterial({ color: A }); s.accentMats.push(barMat);
+  const bar = new THREE.Mesh(new RoundedBoxGeometry(2.7, 0.32, 0.09, 3, 0.1), barMat); bar.position.set(0, 1.49, 0.005);
+  const caretMat = new THREE.MeshBasicMaterial({ color: A }); s.accentMats.push(caretMat);
+  const caret = new THREE.Mesh(new THREE.BoxGeometry(0.04, 0.24, 0.02), caretMat);
+  doc.add(paper, bar, caret);
+  s.spin.add(micG, doc);
+  doc.updateMatrix(); micG.updateMatrix();
+
+  // where each word lands, in document space: rows of random-width blocks
+  const slots = []; let rnd = 7;
+  const rand = () => { rnd = (rnd * 9301 + 49297) % 233280; return rnd / 233280; };
+  for (let row = 0; row < 7; row++) {
+    let x = -1.12; const y = 1.05 - row * 0.36, maxW = row === 6 ? 1.2 : 2.24;
+    while (true) {
+      const w = 0.22 + rand() * 0.5;
+      if (x + w > -1.12 + maxW) break;
+      slots.push({ x: x + w / 2, y, w }); x += w + 0.1;
+    }
+  }
+  const wordMats = [amber, new THREE.MeshPhysicalMaterial({ color: 0x3a2a14, roughness: 0.4 }), new THREE.MeshPhysicalMaterial({ color: 0x6b5233, roughness: 0.4 })];
+  const words = slots.map((sl, i) => {
+    const m = new THREE.Mesh(new RoundedBoxGeometry(sl.w, 0.15, 0.05, 2, 0.05), wordMats[i % 5 === 0 ? 0 : (i % 2) + 1]);
+    m.userData.to = new THREE.Vector3(sl.x, sl.y, 0.07).applyMatrix4(doc.matrix);
+    s.spin.add(m); return m;
+  });
+  const from = new THREE.Vector3(0.35, 0.8, 0).applyMatrix4(micG.matrix);
+
+  // sound rings leaving the mic
+  const rings = [];
+  for (let i = 0; i < 6; i++) {
+    const m = new THREE.MeshBasicMaterial({ color: A, transparent: true, opacity: 0, depthWrite: false, blending: isLight() ? THREE.NormalBlending : THREE.AdditiveBlending });
+    s.accentMats.push(m);
+    const r = new THREE.Mesh(new THREE.TorusGeometry(0.4, 0.025, 10, 64), m); r.rotation.y = Math.PI / 2;
+    rings.push(r); s.spin.add(r);
+  }
+  s.onTheme = () => rings.forEach(r => { r.material.blending = isLight() ? THREE.NormalBlending : THREE.AdditiveBlending; r.material.needsUpdate = true; });
+
+  const GAP = 0.2, FLY = 0.9, START = 0.4;
+  const lastLand = START + (words.length - 1) * GAP + FLY;
+  const CYC = lastLand + 1.8;
+  const ease = x => 1 - Math.pow(1 - x, 3);
+  const ctrl = new THREE.Vector3(), tmp = new THREE.Vector3();
+  s.spin.position.y = -0.1;
+  s.update = (t) => {
+    const ct = t % CYC;
+    const fade = Math.min(1, Math.max(0, (ct - (CYC - 0.6)) / 0.5));
+    const talking = ct < lastLand - FLY + 0.3;
+    head.material.emissiveIntensity = 0.08 + (talking ? 0.25 * (0.5 + 0.5 * Math.sin(t * 9)) : 0);
+    micG.position.y = -0.2 + Math.sin(t * 1.3) * 0.06;
+    let filled = 0;
+    words.forEach((m, i) => {
+      const st = START + i * GAP, p = Math.min(1, Math.max(0, (ct - st) / FLY));
+      if (p <= 0) { m.scale.setScalar(0.001); return; }
+      const e = ease(p), to = m.userData.to;
+      ctrl.copy(from).lerp(to, 0.5); ctrl.y += 1.6; ctrl.z += 0.8;
+      // quadratic curve from the mic, up and over, onto the page
+      tmp.copy(from).multiplyScalar((1 - e) * (1 - e)).addScaledVector(ctrl, 2 * (1 - e) * e).addScaledVector(to, e * e);
+      m.position.copy(tmp);
+      m.rotation.set(doc.rotation.x + (1 - e) * 2.5, doc.rotation.y + (1 - e) * 1.5, doc.rotation.z + (1 - e) * 1.2);
+      m.scale.setScalar(Math.max(0.001, (0.5 + 0.5 * e) * (1 - fade)));
+      if (p >= 1) filled = i + 1;
+    });
+    const next = slots[Math.min(filled, slots.length - 1)];
+    caret.position.set(filled >= slots.length ? next.x + next.w / 2 + 0.08 : next.x - next.w / 2 - 0.02, next.y, 0.07);
+    caret.visible = Math.floor(t * 2.4) % 2 === 0 && fade === 0;
+    rings.forEach((r, i) => {
+      const q = (t * 0.55 + i / rings.length) % 1;
+      r.position.set(from.x + q * 1.6, from.y + Math.sin(q * Math.PI) * 0.25, from.z);
+      r.scale.setScalar(0.5 + q * 1.4);
+      r.material.opacity = talking ? Math.sin(q * Math.PI) * 0.8 : r.material.opacity * 0.9;
+    });
+  };
+}
+
 function show() {
-  const build = { vinyl, airbridge, island, platter }[KIND];
+  const build = { vinyl, airbridge, island, platter, mic }[KIND];
   const hero = document.querySelector('.hero');
   if (!build || !hero) return;
   const sec = document.createElement('section');
@@ -315,7 +408,7 @@ function show() {
   if (ph) ph.replaceWith(sec);
   else if (watch && watch.parentNode === hero.parentNode) watch.before(sec); else hero.after(sec);
   const box = sec.firstElementChild;
-  const cfg = { vinyl: { z: 8.6, y: 3.8, idle: 0.3 }, airbridge: { z: 9.5, y: 1.2, idle: 0.2 }, island: { z: 11.5, y: 0.6, idle: 0.25 }, platter: { z: 9.2, y: 4.2, idle: 0.3 } }[KIND];
+  const cfg = { vinyl: { z: 8.6, y: 3.8, idle: 0.3 }, airbridge: { z: 9.5, y: 1.2, idle: 0.2 }, island: { z: 11.5, y: 0.6, idle: 0.25 }, platter: { z: 9.2, y: 4.2, idle: 0.3 }, mic: { z: 10, y: 1.4, idle: 0.22 } }[KIND];
   const s = makeStage(box, cfg); if (!s) return;
   build(s).then(() => s.start());
 }
