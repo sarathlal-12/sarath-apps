@@ -226,6 +226,30 @@
 .br-safe { font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: rgba(48,209,88,.16); color: #4ADE80; }
 .br-msg { margin: 0; font-size: 13px; color: rgba(242,239,232,.6); text-align: center; }
 
+/* Sensiloop demo (laptop): live temps, a chart, a heat alert and a saved report */
+.sl-win { left: 50%; top: 45%; transform: translate(-50%, -50%); width: 460px; height: 400px; }
+.sl-body { flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 14px 16px 16px; color: #F2EFE8; min-height: 0; }
+.sl-head { display: flex; justify-content: space-between; align-items: center; } .sl-head b { font-size: 17px; }
+.sl-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 650; padding: 4px 10px; border-radius: 99px; background: rgba(255,255,255,.06); }
+.sl-pill i { width: 7px; height: 7px; border-radius: 50%; background: #3DD68C; transition: background .3s; }
+.sl-warm .sl-pill i { background: #F5B83D; } .sl-hot .sl-pill i { background: #F0605A; }
+.sl-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.sl-tile { padding: 10px 12px; border-radius: 14px; background: rgba(255,255,255,.06); display: grid; gap: 4px; }
+.sl-tile small { font-size: 11px; color: rgba(242,239,232,.55); }
+.sl-tile b { font-size: 22px; letter-spacing: -.02em; transition: color .3s; }
+.sl-tile b.warm { color: #F5B83D; } .sl-tile b.hot { color: #F0605A; }
+.sl-mini { height: 5px; border-radius: 3px; background: rgba(255,255,255,.1); overflow: hidden; }
+.sl-mini i { display: block; height: 100%; width: 40%; border-radius: 3px; background: var(--c); transition: width .3s; }
+.sl-chart { width: 100%; height: 92px; border-radius: 12px; background: rgba(255,255,255,.04); }
+.sl-chart polyline { fill: none; stroke-width: 2; vector-effect: non-scaling-stroke; stroke-linejoin: round; }
+.sl-c1 { stroke: #F0605A; } .sl-c2 { stroke: var(--c); }
+.sl-msg { margin: 0; font-size: 12.5px; color: rgba(242,239,232,.6); text-align: center; }
+.sl-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: auto; }
+.sl-btns .q-btn { margin: 0; }
+.sl-toast { position: absolute; right: 16px; bottom: 52px; z-index: 5; padding: 10px 14px; border-radius: 12px; background: #F2EFE8; color: #111; font-size: 12px; font-weight: 650; box-shadow: 0 14px 30px rgba(0,0,0,.4);
+  opacity: 0; transform: translateY(10px); transition: opacity .3s, transform .3s; pointer-events: none; }
+.sl-toast.on { opacity: 1; transform: none; }
+
 /* ================= Sticky bottom button ================= */
 .q-cta { position: fixed; left: 50%; bottom: 18px; z-index: 90; display: flex; align-items: center; gap: 10px; padding: 7px 22px 7px 7px; border-radius: 99px; text-decoration: none; white-space: nowrap;
   background: color-mix(in srgb, var(--surface) 75%, transparent); color: var(--text); border: 1px solid var(--line); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);

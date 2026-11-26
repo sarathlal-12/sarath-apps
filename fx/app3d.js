@@ -3,7 +3,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 // App pages: a glossy 3D app icon in the hero, plus a 3D scene that shows what the app does.
-// The page picks them with <html data-fx-icon="/x/icon.png" data-fx-object="vinyl|airbridge|island|platter">.
+// The page picks them with <html data-fx-icon="/x/icon.png" data-fx-object="vinyl|airbridge|island|platter|mic|chip">.
 const root = document.documentElement;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches || location.search.includes('still');
 const ICON = root.dataset.fxIcon, KIND = root.dataset.fxObject;
@@ -16,6 +16,7 @@ const CAPTIONS = {
   island: 'Lives at the top of your screen.',
   platter: 'Rakes out the junk. Nothing else.',
   mic: 'You talk. It types.',
+  chip: 'Every sensor, read on a loop.',
 };
 
 function roundMask(r = 58) {
@@ -396,8 +397,59 @@ async function mic(s) {
   };
 }
 
+// ---------- Sensiloop: a CPU chip warming up, with a ring of live bars looping around it like a chart ----------
+async function chip(s) {
+  const A = accentHex();
+  const pcb = new THREE.Mesh(new RoundedBoxGeometry(3.4, 0.22, 3.4, 4, 0.08), new THREE.MeshPhysicalMaterial({ color: 0x1d2a26, metalness: 0.3, roughness: 0.5, clearcoat: 0.6 }));
+  const heat = new THREE.Color(0xF0605A), cool = new THREE.Color(0xbfbfc4);
+  const ihsMat = new THREE.MeshPhysicalMaterial({ color: 0xbfbfc4, metalness: 1, roughness: 0.22, emissive: heat.clone(), emissiveIntensity: 0 });
+  const ihs = new THREE.Mesh(new RoundedBoxGeometry(2.2, 0.2, 2.2, 4, 0.08), ihsMat); ihs.position.y = 0.2;
+  // gold pads along the edges
+  const gold = new THREE.MeshPhysicalMaterial({ color: 0xd4a94a, metalness: 1, roughness: 0.3 });
+  const padGeo = new THREE.BoxGeometry(0.12, 0.04, 0.22);
+  for (let i = 0; i < 10; i++) for (const side of [0, 1, 2, 3]) {
+    const p = new THREE.Mesh(padGeo, gold), o = -1.35 + i * 0.3;
+    if (side < 2) p.position.set(o, 0.12, side ? 1.55 : -1.55); else { p.position.set(side === 2 ? 1.55 : -1.55, 0.12, o); p.rotation.y = Math.PI / 2; }
+    pcb.add(p);
+  }
+  // the loop: a glowing ring around the chip
+  const ringMat = new THREE.MeshBasicMaterial({ color: A, transparent: true, opacity: 0.7, depthWrite: false }); s.accentMats.push(ringMat);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(2.55, 0.035, 10, 160), ringMat); ring.rotation.x = Math.PI / 2; ring.position.y = 0.05;
+  // bars standing on the ring: a radial live chart, a wave runs around it
+  const N = innerWidth < 700 ? 40 : 64;
+  const barGeo = new THREE.BoxGeometry(0.12, 1, 0.12); barGeo.translate(0, 0.5, 0);
+  const lowMat = glossy(A, { emissive: new THREE.Color(A), emissiveIntensity: 0.15 }); s.accentMats.push(lowMat);
+  const hotMat = glossy(0xF0605A, { emissive: new THREE.Color(0xF0605A), emissiveIntensity: 0.25 });
+  const bars = [];
+  for (let i = 0; i < N; i++) {
+    const a = i / N * Math.PI * 2, m = new THREE.Mesh(barGeo, lowMat);
+    m.position.set(Math.cos(a) * 2.9, 0, Math.sin(a) * 2.9); m.rotation.y = -a;
+    bars.push(m); s.spin.add(m);
+  }
+  // a pulse that travels round the loop
+  const dotMat = new THREE.MeshBasicMaterial({ color: A }); s.accentMats.push(dotMat);
+  const dot = new THREE.Mesh(new THREE.SphereGeometry(0.11, 20, 20), dotMat);
+  s.spin.add(pcb, ihs, ring, dot);
+  s.spin.position.y = -0.4;
+  s.update = (t) => {
+    const load = 0.5 + 0.5 * Math.sin(t * 0.45);              // the PC gets busy, then calms down
+    ihsMat.emissiveIntensity = load * 0.18;                  // a faint warm glow, the lid stays silver
+    ihsMat.color.copy(cool).lerp(heat, load * 0.12);
+    const head = (t * 0.5) % 1;
+    bars.forEach((m, i) => {
+      const p = i / N, since = (head - p + 1) % 1;            // how long ago the pulse passed this bar
+      const h = 0.25 + load * 1.1 * (0.55 + 0.45 * Math.sin(i * 1.7 + t * 2.2)) * (0.6 + 0.4 * Math.exp(-since * 6));
+      m.scale.y = h;
+      m.material = h > 1.05 ? hotMat : lowMat;
+    });
+    const a = head * Math.PI * 2;
+    dot.position.set(Math.cos(a) * 2.55, 0.05, Math.sin(a) * 2.55);
+    ring.material.opacity = 0.45 + load * 0.4;
+  };
+}
+
 function show() {
-  const build = { vinyl, airbridge, island, platter, mic }[KIND];
+  const build = { vinyl, airbridge, island, platter, mic, chip }[KIND];
   const hero = document.querySelector('.hero');
   if (!build || !hero) return;
   const sec = document.createElement('section');
@@ -408,7 +460,7 @@ function show() {
   if (ph) ph.replaceWith(sec);
   else if (watch && watch.parentNode === hero.parentNode) watch.before(sec); else hero.after(sec);
   const box = sec.firstElementChild;
-  const cfg = { vinyl: { z: 8.6, y: 3.8, idle: 0.3 }, airbridge: { z: 9.5, y: 1.2, idle: 0.2 }, island: { z: 11.5, y: 0.6, idle: 0.25 }, platter: { z: 9.2, y: 4.2, idle: 0.3 }, mic: { z: 10, y: 1.4, idle: 0.22 } }[KIND];
+  const cfg = { vinyl: { z: 8.6, y: 3.8, idle: 0.3 }, airbridge: { z: 9.5, y: 1.2, idle: 0.2 }, island: { z: 11.5, y: 0.6, idle: 0.25 }, platter: { z: 9.2, y: 4.2, idle: 0.3 }, mic: { z: 10, y: 1.4, idle: 0.22 }, chip: { z: 9.6, y: 4.6, idle: 0.3 } }[KIND];
   const s = makeStage(box, cfg); if (!s) return;
   build(s).then(() => s.start());
 }

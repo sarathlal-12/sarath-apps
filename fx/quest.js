@@ -186,6 +186,18 @@
       '<div class="sc-fix sc-up" style="--d:1s"><s>next js</s>→<b>Next.js</b><em>✓</em></div></div>',
     'ut-notes': '<div class="sc-c light sc-up" ' + at(12, 12, 54) + '><b>Notes</b>' + bars([90, 75, 85, 50], 0.4) + '</div>' +
       '<span class="sc-p sc-pop" ' + at(52, 64, 0, '--d:1.1s') + '><span class="sc-dot"></span> On this PC · no cloud</span>',
+    // Sensiloop
+    'sl-hot': '<div class="sc-c sc-up" ' + at(14, 14, 44) + '><div class="sc-head"><span>CPU</span><small class="sc-bad">Hot</small></div><b class="sc-big sl-temp">91 °C</b><small class="sc-mut">Usage 98 % · 4.4 GHz</small></div>' +
+      '<div class="sc-c sc-up" ' + at(62, 30, 28, '--d:.3s') + '><b>GPU</b><b class="sc-big">74 °C</b></div>' +
+      '<span class="sc-p warn sc-pop" ' + at(20, 74, 0, '--d:1s') + '>⚠ CPU is running hot</span>',
+    'sl-game': '<div class="sc-c sc-up" ' + at(8, 12, 84) + '><div class="sc-head"><span>Last hour</span><small>CPU · GPU</small></div>' +
+      '<svg class="sl-line" viewBox="0 0 100 30" preserveAspectRatio="none"><path pathLength="100" class="sl-draw" d="M0 26 L12 25 L20 24 L28 12 L40 8 L52 9 L64 7 L76 8 L84 20 L100 24"/><path pathLength="100" class="sl-draw b" d="M0 28 L12 27 L20 27 L28 16 L40 11 L52 12 L64 10 L76 12 L84 24 L100 27"/></svg>' +
+      '<small class="sc-mut">Peak 88 °C at 21:14</small></div>',
+    'sl-report': '<div class="sc-c light sc-up" ' + at(18, 10, 44) + '><div class="sc-win"><i></i><i></i><i></i> Report.pdf</div><b>Sensiloop report</b>' + bars([90, 60, 80, 70], 0.4) + '</div>' +
+      '<span class="sc-p sc-pop" ' + at(54, 66, 0, '--d:1.2s') + '>✓ Saved · 1 h · 480 KB</span>',
+    'sl-tray': '<div class="sc-c sc-up" ' + at(22, 18, 56) + '><div class="sc-head"><span><span class="sc-dot pulse"></span> Logging in the tray</span><small>45 MB</small></div>' +
+      '<div class="sc-bar"><i class="sc-fill" style="--w:12%;--d:.5s"></i></div><small class="sc-mut">History kept for 7 days</small></div>' +
+      '<span class="sc-p sc-pop" ' + at(52, 72, 0, '--d:1s') + '>Quit from the tray to stop</span>',
   };
 
   // ---------------- sliding sheet ----------------
@@ -220,6 +232,7 @@
     light: { name: '.light', icon: '/light/icon.png', c: '#30D158', dev: 'pc' },
     byterake: { name: 'Byterake', icon: '/byterake/icon.png', c: '#9579FC', dev: 'pc' },
     utter: { name: 'Utter', icon: '/utter/icon.png', c: '#E8453C', dev: 'pc' },
+    sensiloop: { name: 'Sensiloop', icon: '/sensiloop/icon.png', c: '#2DD4BF', dev: 'pc' },
   };
   var LYRICS = ['Windows down on the coast road', 'No bars left on my phone', 'But the song keeps on playing', 'Saved it before we left home', 'Every word right where it should be', 'No signal, just you and me', 'Turn it up, the tide is low', 'Some songs never need to load'];
 
@@ -258,6 +271,15 @@
         '<p class="ut-said"></p>' +
         '<button type="button" class="q-btn ut-go">Hold Ctrl + Win and talk</button></div></div>' +
         '<span class="ut-pill"><i></i><i></i><i></i><i></i><i></i></span>' + taskbar('/utter/icon.png') + '</div>',
+      sensiloop: '<div class="pc-desk sl-desk"><div class="pc-win sl-win"><span class="win-bar"><img src="/sensiloop/icon.png" alt="">Sensiloop<span class="win-ctl">─ ▢ ✕</span></span><div class="sl-body">' +
+        '<div class="sl-head"><b>Overview</b><span class="sl-pill"><i></i><span class="sl-state">All good</span></span></div>' +
+        '<div class="sl-tiles"><div class="sl-tile"><small>CPU</small><b class="sl-cpu">48 °C</b><span class="sl-mini"><i class="sl-cpu-bar"></i></span></div>' +
+        '<div class="sl-tile"><small>GPU</small><b class="sl-gpu">41 °C</b><span class="sl-mini"><i class="sl-gpu-bar"></i></span></div>' +
+        '<div class="sl-tile"><small>RAM</small><b>62 %</b><span class="sl-mini"><i style="width:62%"></i></span></div></div>' +
+        '<svg class="sl-chart" viewBox="0 0 300 70" preserveAspectRatio="none"><polyline class="sl-c1" points=""/><polyline class="sl-c2" points=""/></svg>' +
+        '<p class="sl-msg">Start a game and watch the temperatures climb.</p>' +
+        '<div class="sl-btns"><button type="button" class="q-btn sl-go">Start a game</button><button type="button" class="q-btn sl-rep" disabled>Save report</button></div></div></div>' +
+        '<div class="sl-toast"></div>' + taskbar('/sensiloop/icon.png') + '</div>',
     };
     function taskbar(icon) {
       return '<div class="pc-task"><span class="pc-start"><i></i><i></i><i></i><i></i></span><span class="pc-search"></span><img src="' + icon + '" alt=""><span class="pc-clock">12:41</span></div>';
@@ -383,6 +405,52 @@
       });
       stop.utter = reset;
       reset();
+    })();
+
+    // Sensiloop: start a game, temperatures and the chart climb, an alert pops, then save a report
+    var sl = sec.querySelector('[data-k="sensiloop"].q-pane');
+    if (sl) (function () {
+      var go = sl.querySelector('.sl-go'), rep = sl.querySelector('.sl-rep'), msg = sl.querySelector('.sl-msg'), toast = sl.querySelector('.sl-toast'),
+        cpu = sl.querySelector('.sl-cpu'), gpu = sl.querySelector('.sl-gpu'), cb = sl.querySelector('.sl-cpu-bar'), gb = sl.querySelector('.sl-gpu-bar'),
+        state = sl.querySelector('.sl-state'), l1 = sl.querySelector('.sl-c1'), l2 = sl.querySelector('.sl-c2');
+      var N = 40, a = [], b = [], timer = 0, load = 0, ticks = 0, alerted = false, recorded = false;
+      function draw() {
+        var c = a[a.length - 1], g = b[b.length - 1];
+        cpu.textContent = Math.round(c) + ' °C'; gpu.textContent = Math.round(g) + ' °C';
+        cb.style.width = Math.min(100, c) + '%'; gb.style.width = Math.min(100, g) + '%';
+        cpu.className = 'sl-cpu' + (c >= 88 ? ' hot' : c >= 75 ? ' warm' : ''); gpu.className = 'sl-gpu' + (g >= 80 ? ' hot' : g >= 70 ? ' warm' : '');
+        var hot = c >= 88, warm = c >= 75 || g >= 70;
+        state.textContent = hot ? 'Running hot' : warm ? 'Getting warm' : 'All good';
+        sl.classList.toggle('sl-hot', hot); sl.classList.toggle('sl-warm', warm && !hot);
+        var pts = function (arr) { return arr.map(function (v, i) { return (i / (N - 1) * 300).toFixed(1) + ',' + (68 - (v - 30) / 70 * 64).toFixed(1); }).join(' '); };
+        l1.setAttribute('points', pts(a)); l2.setAttribute('points', pts(b));
+      }
+      function step() {
+        ticks++;
+        var tc = load ? 92 : 47, tg = load ? 81 : 41;
+        var c = a[a.length - 1], g = b[b.length - 1];
+        a.push(c + (tc - c) * 0.16 + (Math.random() - 0.5) * 2.4); b.push(g + (tg - g) * 0.12 + (Math.random() - 0.5) * 1.6);
+        a.shift(); b.shift(); draw();
+        if (load && !alerted && a[a.length - 1] >= 88) { alerted = true; show('⚠ CPU is running hot · 90 °C'); }
+      }
+      function show(t) { toast.textContent = t; toast.classList.add('on'); setTimeout(function () { toast.classList.remove('on'); }, 2600); }
+      function reset() {
+        clearInterval(timer); load = 0; alerted = false; recorded = false; a = []; b = [];
+        for (var i = 0; i < N; i++) { a.push(47 + Math.sin(i * 0.7) * 1.5); b.push(41 + Math.cos(i * 0.5)); }
+        go.textContent = 'Start a game'; rep.disabled = true; msg.textContent = 'Start a game and watch the temperatures climb.';
+        toast.classList.remove('on'); draw();
+        if (current === 'sensiloop') timer = setInterval(step, 260);   // only tick while this tab is showing
+      }
+      go.addEventListener('click', function () {
+        load = load ? 0 : 1; recorded = true; rep.disabled = false;
+        go.textContent = load ? 'Quit the game' : 'Start a game';
+        msg.textContent = load ? 'Under load. Every reading is logged.' : 'Cooling down. Save a report of what just happened.';
+      });
+      rep.addEventListener('click', function () { if (recorded) show('✓ Report saved · Last 15 min.pdf'); });
+      stop.sensiloop = function () { clearInterval(timer); };
+      reset();
+      // restart the live chart when this tab is opened again
+      sec.querySelectorAll('.q-tabs button').forEach(function (btn) { btn.addEventListener('click', function () { if (btn.dataset.k === 'sensiloop') reset(); }); });
     })();
   }
 

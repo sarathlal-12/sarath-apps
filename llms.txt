@@ -63,3 +63,13 @@
 - Downloads (v1.1.0): https://github.com/sarathlal-12/utter/releases/tag/v1.1.0
 - Price: free, MIT license. No account; nothing leaves the PC.
 - Platforms: Windows 10 and 11, 64-bit (installer, per-user). English only for now.
+
+# Sensiloop
+
+> Free, light hardware monitor for Windows, like HWiNFO with a simpler interface. An Overview page shows one card each for the CPU (temperature, usage, clock, power, a bar per core), GPU (temperature, usage, clock, power, video memory), RAM, drives, battery and network, plus an interactive 15-minute chart. An All sensors page lists every sensor (each core's load, clock, power and voltage, GPU hot spot, RAM stick and SSD temperatures, fans when exposed) with now/min/avg/max and charts any ticked sensors. It logs every 2 seconds while open or in the tray (about 45 MB when closed to the tray), keeps 7 days of history, and exports PDF or interactive HTML reports for the last 15 min/1 h/6 h/24 h, since the PC started, everything recorded, or a custom range, with chosen parts and measurements. Optional CPU/GPU temperature alerts. Read-only: never changes hardware settings. Built with Tauri (Rust) and a native LibreHardwareMonitor helper; CPU temperature, fans and voltages need admin rights and the free PawnIO driver, which the installer offers to install. No account, no analytics, no internet needed.
+
+- Website: https://sarath-apps.vercel.app/sensiloop/
+- Source code: https://github.com/sarathlal-12/sensiloop
+- Downloads (v1.0.0): https://github.com/sarathlal-12/sensiloop/releases/tag/v1.0.0
+- Price: free, MIT license. No account; nothing leaves the PC.
+- Platforms: Windows 10 and 11, 64-bit (installer, includes everything it needs).
