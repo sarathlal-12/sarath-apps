@@ -234,7 +234,16 @@
     utter: { name: 'Utter', icon: '/utter/icon.png', c: '#E8453C', dev: 'pc' },
     sensiloop: { name: 'Sensiloop', icon: '/sensiloop/icon.png', c: '#2DD4BF', dev: 'pc' },
   };
-  var LYRICS = ['Windows down on the coast road', 'No bars left on my phone', 'But the song keeps on playing', 'Saved it before we left home', 'Every word right where it should be', 'No signal, just you and me', 'Turn it up, the tide is low', 'Some songs never need to load'];
+  // Made-up demo songs; covers are pure CSS (.sv-cv.k0 to .k4).
+  var SONGS = [
+    { t: 'Paper Kites at Noon', a: 'Mira Vale', d: 28, c: '#F59E42', ly: ['Strings in our hands at noon', 'Paper kites over the school', 'Wind picks the colours up', 'Higher than we ever flew', 'Hold on, let the line run out', 'Watch them dance above the town', 'If the string snaps, let it go', 'Some things are meant to float'] },
+    { t: 'Neon Laundromat', a: 'The Late Shift', d: 30, c: '#D946EF', ly: ['Quarter past two, spin cycle on', 'Neon hum and a sad pop song', 'Socks go round like city lights', 'Waiting on a dryer all night', 'You fold the shirts, I keep the beat', 'Warm cotton on an empty street', 'Buzzing sign says open late', 'Clean clothes and a clean slate'] },
+    { t: 'Low Tide Radio', a: 'Harbor Lights', d: 32, c: '#F0605A', ly: ['Windows down on the coast road', 'No bars left on my phone', 'But the song keeps on playing', 'Saved it before we left home', 'Every word right where it should be', 'No signal, just you and me', 'Turn it up, the tide is low', 'Some songs never need to load'] },
+    { t: 'Static Bloom', a: 'Junie Park', d: 29, c: '#4ADE80', ly: ['Radio fuzz in the garden', 'Flowers tuned to a station', 'Every petal a frequency', 'Growing loud in the static', 'Turn the dial, let it open', 'Green light through the noise', 'Nothing lost, it was saved here', 'Blooming quiet, blooming clear'] },
+    { t: 'Midnight Ferry', a: 'Oslo Ghosts', d: 31, c: '#60A5FA', ly: ['Last boat leaves at midnight', 'Harbour lights in a line', 'Engine hum like a lullaby', 'Moon on the water shines', 'No signal past the breakwater', 'Still the song is here with me', 'Halfway home on the dark sea', 'Sound that needs no wifi'] },
+  ];
+  var svIdx = 2;
+  function lyHtml(S) { return S.ly.map(function (l) { return '<p>' + esc(l) + '</p>'; }).join(''); }
 
   function phone() {
     var P = cfg.phone; if (!P) return;
@@ -243,11 +252,11 @@
     var single = keys.length === 1;
     var panes = {
       spotvault: '<div class="sv-top"><span>Now playing</span><span class="sv-off">✓ Saved offline</span></div>' +
-        '<div class="sv-art"><img src="/logo.png" alt=""></div>' +
-        '<div class="sv-meta"><b>Low Tide Radio</b><small>Demo track · plays offline</small></div>' +
-        '<div class="sv-bar"><i></i></div><div class="sv-times"><span class="sv-cur">0:00</span><span>0:32</span></div>' +
+        '<div class="sv-art"><span class="sv-cv k' + svIdx + '"></span></div>' +
+        '<div class="sv-meta"><b>' + esc(SONGS[svIdx].t) + '</b><small>' + esc(SONGS[svIdx].a) + ' · saved offline</small></div>' +
+        '<div class="sv-bar"><i></i></div><div class="sv-times"><span class="sv-cur">0:00</span><span class="sv-dur">0:' + SONGS[svIdx].d + '</span></div>' +
         '<button type="button" class="sv-play" aria-label="Play">▶</button>' +
-        '<div class="sv-ly"><div class="sv-ly-in">' + LYRICS.map(function (l) { return '<p>' + esc(l) + '</p>'; }).join('') + '</div></div>',
+        '<div class="sv-ly"><div class="sv-ly-in">' + lyHtml(SONGS[svIdx]) + '</div></div>',
       airbridge: '<div class="ab-head"><b>AirBridge</b><small class="ab-state">Not connected</small></div>' +
         '<div class="ab-stage"><div class="ab-dev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg>Phone</div>' +
         '<div class="ab-waves"><i></i><i></i><i></i><i></i><i></i></div>' +
@@ -286,19 +295,47 @@
     }
     var sec = h('<section class="q-demo" id="demo"><p class="q-kick">' + esc(P.kicker) + '</p><h2 class="q-demo-h">' + P.title + '</h2><p class="q-demo-sub">' + esc(P.sub) + '</p>' +
       (single ? '' : '<nav class="q-tabs" aria-label="Pick an app demo">' + keys.map(function (k, i) { return '<button type="button" class="' + (i ? '' : 'on') + '" data-k="' + k + '"><img src="' + DEMO[k].icon + '" alt="">' + DEMO[k].name + '</button>'; }).join('') + '</nav>') +
-      '<div class="q-stage"><div class="q-phone" style="--c:' + DEMO[keys[0]].c + '"><span class="q-notch"></span><span class="q-cam"></span><div class="q-screen">' +
+      '<div class="q-stage">' + (DEMO.spotvault && keys.indexOf('spotvault') > -1 ? '<div class="sv-car" role="group" aria-label="Pick a song">' + SONGS.map(function (S, i) {
+        return '<button type="button" class="sv-c" data-i="' + i + '" aria-label="Play ' + esc(S.t) + ' by ' + esc(S.a) + '"><span class="sv-cv k' + i + '"></span><span class="sv-cap"><b>' + esc(S.t) + '</b><small>' + esc(S.a) + '</small></span></button>';
+      }).join('') + '</div>' : '') + '<div class="q-phone" style="--c:' + DEMO[keys[0]].c + '"><span class="q-notch"></span><span class="q-cam"></span><div class="q-screen">' +
       keys.map(function (k, i) { return '<div class="q-pane' + (i ? '' : ' on') + '" data-k="' + k + '">' + panes[k] + '</div>'; }).join('') + '</div></div></div>' +
       '</section>');
     el.replaceWith(sec); if (anchor === el) anchor = sec;
     var ph = sec.querySelector('.q-phone'), stage = sec.querySelector('.q-stage'), current = keys[0];
+    var car = sec.querySelector('.sv-car'), covers = car ? [].slice.call(car.children) : [];
     var stop = {};
     // Phone apps show on a phone; Windows apps morph the device into a laptop.
     function fit() {
-      var pc = DEMO[current].dev === 'pc';
+      var pc = DEMO[current].dev === 'pc', withCar = car && current === 'spotvault';
       ph.classList.toggle('pc', pc);
-      var s = pc ? Math.min(1, (stage.clientWidth - 8) / 860) : 1;
+      // on narrow screens shrink the phone a little so the song covers can peek out
+      var s = pc ? Math.min(1, (stage.clientWidth - 8) / 860) : withCar ? Math.min(1, (stage.clientWidth - 64) / 330) : 1;
       ph.style.setProperty('--s', s.toFixed(3));
       stage.style.height = ((pc ? 520 : 690) * s + (pc ? 40 * s : 0)) + 'px';
+      layoutCar(s);
+    }
+    // Coverflow: the playing song hides behind the phone, two songs on each side (wraps around).
+    function layoutCar(s) {
+      if (!car) return;
+      var on = current === 'spotvault';
+      car.classList.toggle('on', on);
+      s = s || +ph.style.getPropertyValue('--s') || 1;
+      var half = stage.clientWidth / 2, pHalf = 165 * s, room = half - pHalf, narrow = room < 140;
+      covers.forEach(function (b, i) {
+        var o = ((i - svIdx + 7) % 5) - 2, a = Math.abs(o);
+        var w = narrow ? 104 : a === 1 ? 170 : 128;
+        var x = !o ? 0 : narrow ? half - 10 : pHalf + room * (a === 1 ? 0.44 : 0.9);
+        var live = on && o !== 0 && !(narrow && a === 2);
+        b.style.width = w + 'px';
+        b.style.top = (255 * s - w / 2) + 'px';
+        b.style.transform = 'translateX(-50%) translateX(' + (o < 0 ? -x : x) + 'px) rotateY(' + (-o * 16) + 'deg)';
+        b.style.opacity = live ? (a === 2 ? 0.75 : 1) : 0;
+        b.style.zIndex = 3 - a;
+        b.classList.toggle('live', live);
+        b.classList.toggle('near', live && a === 1 && !narrow);
+        b.classList.toggle('far', a === 2);
+        b.tabIndex = live ? 0 : -1;
+      });
     }
     addEventListener('resize', fit);
     sec.querySelectorAll('.q-tabs button').forEach(function (b) {
@@ -316,7 +353,31 @@
     var sv = sec.querySelector('[data-k="spotvault"].q-pane');
     if (sv) (function () {
       var btn = sv.querySelector('.sv-play'), bar = sv.querySelector('.sv-bar i'), cur = sv.querySelector('.sv-cur'),
-        lyIn = sv.querySelector('.sv-ly-in'), ps = lyIn.querySelectorAll('p'), D = 32, t = 0, on = false, last = 0;
+        lyIn = sv.querySelector('.sv-ly-in'), ps = lyIn.querySelectorAll('p'), D = SONGS[svIdx].d, t = 0, on = false, last = 0,
+        art = sv.querySelector('.sv-art');
+      // switch songs from the side covers; keeps playing if it was playing
+      function load(i) {
+        svIdx = (i + SONGS.length) % SONGS.length;
+        var S = SONGS[svIdx];
+        art.firstChild.className = 'sv-cv k' + svIdx;
+        art.classList.remove('swap'); void art.offsetWidth; art.classList.add('swap');
+        sv.querySelector('.sv-meta b').textContent = S.t;
+        sv.querySelector('.sv-meta small').textContent = S.a + ' · saved offline';
+        sv.querySelector('.sv-dur').textContent = '0:' + S.d;
+        lyIn.innerHTML = lyHtml(S); ps = lyIn.querySelectorAll('p'); D = S.d; t = 0;
+        DEMO.spotvault.c = S.c;
+        if (current === 'spotvault') ph.style.setProperty('--c', S.c);
+        draw(); layoutCar();
+      }
+      covers.forEach(function (b) { b.addEventListener('click', function () { load(+b.dataset.i); }); });
+      // swipe left/right on the phone or covers
+      var sx = null;
+      stage.addEventListener('touchstart', function (e) { sx = current === 'spotvault' ? e.touches[0].clientX : null; }, { passive: true });
+      stage.addEventListener('touchend', function (e) {
+        if (sx === null) return;
+        var dx = e.changedTouches[0].clientX - sx; sx = null;
+        if (Math.abs(dx) > 40) load(svIdx + (dx < 0 ? 1 : -1));
+      }, { passive: true });
       function draw() {
         var line = Math.min(ps.length - 1, Math.floor(t / D * ps.length));
         bar.style.width = (t / D * 100) + '%';

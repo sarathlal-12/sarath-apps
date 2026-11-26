@@ -158,6 +158,44 @@
 .sv-off { color: var(--c); font-weight: 600; }
 .sv-art { width: 150px; aspect-ratio: 1; margin: 2px auto 0; border-radius: 24px; display: grid; place-items: center; flex: none; background: radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--c) 70%, #fff), var(--c) 40%, #2a0d0c); box-shadow: 0 24px 50px -16px var(--c); }
 .sv-art img { width: 58px; border-radius: 14px; }
+.sv-art { position: relative; overflow: hidden; }
+.sv-art .sv-cv { position: absolute; inset: 0; border-radius: inherit; }
+.sv-art.swap .sv-cv { animation: svSwap .5s cubic-bezier(.2,.8,.2,1); }
+@keyframes svSwap { from { opacity: 0; transform: scale(.86); } }
+
+/* song covers (made-up art, pure CSS) */
+.sv-cv { display: block; position: relative; overflow: hidden; aspect-ratio: 1; border-radius: 18px; }
+.sv-cv::before, .sv-cv::after { content: ""; position: absolute; }
+.sv-cv.k0 { background: linear-gradient(170deg, #FFD08A, #F59E42 55%, #C2410C); }
+.sv-cv.k0::before { width: 46%; aspect-ratio: 1; left: 27%; top: 22%; border-radius: 50%; background: #FFF3D6; box-shadow: 0 0 0 10px rgba(255,243,214,.18), 0 0 0 22px rgba(255,243,214,.1); }
+.sv-cv.k0::after { left: 0; right: 0; bottom: 0; height: 34%; background: repeating-linear-gradient(#7C2D12 0 4px, transparent 4px 10px); opacity: .55; }
+.sv-cv.k1 { background: #1A0B2E; }
+.sv-cv.k1::before { inset: -20%; background: repeating-linear-gradient(135deg, #D946EF 0 8px, transparent 8px 22px, #22D3EE 22px 26px, transparent 26px 40px); opacity: .75; }
+.sv-cv.k1::after { inset: 24%; border-radius: 50%; background: #1A0B2E; border: 3px solid #F0ABFC; box-shadow: 0 0 18px #D946EF, inset 0 0 0 8px #1A0B2E, inset 0 0 0 10px rgba(240,171,252,.5); }
+.sv-cv.k2 { background: linear-gradient(180deg, #FF8A7A, #F0605A 45%, #5B1620); }
+.sv-cv.k2::before { left: -30%; right: -30%; bottom: -55%; height: 110%; border-radius: 50%; background: repeating-radial-gradient(circle at 50% 50%, rgba(255,255,255,.55) 0 2px, transparent 2px 12px); }
+.sv-cv.k2::after { width: 22%; aspect-ratio: 1; right: 18%; top: 14%; border-radius: 50%; background: #FFE4DC; }
+.sv-cv.k3 { background: radial-gradient(circle at 50% 55%, #14532D, #052E16 70%); }
+.sv-cv.k3::before { width: 76%; aspect-ratio: 1; left: 12%; top: 14%; border-radius: 50%; background: repeating-conic-gradient(#4ADE80 0 18deg, #BEF264 18deg 30deg, transparent 30deg 45deg); -webkit-mask: radial-gradient(circle, transparent 18%, #000 19%); mask: radial-gradient(circle, transparent 18%, #000 19%); }
+.sv-cv.k3::after { width: 18%; aspect-ratio: 1; left: 41%; top: 43%; border-radius: 50%; background: #FDE047; }
+.sv-cv.k4 { background: linear-gradient(180deg, #0B1638, #1E3A7A 62%, #0A1024 62%); }
+.sv-cv.k4::before { width: 26%; aspect-ratio: 1; right: 16%; top: 12%; border-radius: 50%; background: #E0E7FF; box-shadow: -7px 3px 0 0 #1E3A7A inset, 0 0 30px rgba(224,231,255,.5); }
+.sv-cv.k4::after { left: 14%; width: 44%; bottom: 30%; height: 12%; background: #F8FAFC; clip-path: polygon(0 40%, 100% 40%, 88% 100%, 8% 100%); box-shadow: 0 0 0 0 transparent; }
+
+/* song carousel beside the phone */
+.sv-car { position: absolute; inset: 0; z-index: 0; perspective: 1100px; opacity: 0; pointer-events: none; transition: opacity .5s; }
+.sv-car.on { opacity: 1; }
+.q-phone { z-index: 1; }
+.sv-c { position: absolute; left: 50%; top: 0; padding: 0; border: 0; background: none; color: var(--text); cursor: pointer; text-align: center; font: inherit;
+  transition: transform .7s cubic-bezier(.2,.8,.2,1), width .7s cubic-bezier(.2,.8,.2,1), top .7s cubic-bezier(.2,.8,.2,1), opacity .5s, filter .5s; }
+.sv-car.on .sv-c.live { pointer-events: auto; }
+.sv-c .sv-cv { width: 100%; box-shadow: 0 30px 60px -24px rgba(0,0,0,.7), 0 0 0 1px rgba(255,255,255,.08); transition: box-shadow .3s; }
+.sv-c:hover .sv-cv, .sv-c:focus-visible .sv-cv { box-shadow: 0 30px 60px -20px rgba(0,0,0,.75), 0 0 0 2px var(--text); }
+.sv-c:focus-visible { outline: none; }
+.sv-c.far { filter: brightness(.6) saturate(.8); }
+.sv-cap { display: block; margin-top: 12px; opacity: 0; transition: opacity .4s; white-space: nowrap; }
+.sv-cap b { display: block; font-size: 14px; } .sv-cap small { color: var(--muted); font-size: 12px; }
+.sv-c.near .sv-cap { opacity: 1; }
 .playing .sv-art { animation: qPulse 1.6s ease-in-out infinite; }
 @keyframes qPulse { 50% { transform: scale(1.04); } }
 .sv-meta { text-align: center; } .sv-meta b { display: block; font-size: 18px; } .sv-meta small { color: rgba(242,239,232,.55); font-size: 12px; }
