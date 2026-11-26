@@ -28,8 +28,8 @@
     "description": "Free, offline voice dictation for Windows. Hold a key, speak, and clean text appears at your cursor. Removes filler words, applies spoken corrections and formats lists, all on your own PC.",
     "applicationCategory": "UtilitiesApplication",
     "operatingSystem": "Windows 10, Windows 11",
-    "softwareVersion": "1.0.0",
-    "downloadUrl": "https://github.com/sarathlal-12/utter/releases/tag/v1.0.0",
+    "softwareVersion": "1.1.0",
+    "downloadUrl": "https://github.com/sarathlal-12/utter/releases/tag/v1.1.0",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "author": { "@type": "Person", "name": "Sarath Lal", "url": "https://github.com/sarathlal-12" },
     "codeRepository": "https://github.com/sarathlal-12/utter"
@@ -58,11 +58,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    /* Same look as the other app pages, with Utter's amber accent. */
+    /* Same look as the other app pages, with Utter's red accent (same as SpotVault). */
     :root {
       --bg: #ECEAE6; --surface: #FFFFFF; --card: #F6F5F2;
       --text: #111111; --muted: #66635E; --grey: #8C8984; --line: rgba(0,0,0,0.09);
-      --accent: #F5A623; --accent-ink: #16181C; --accent-text: #8F5600; --ink: #111111; --ink-text: #F2EFE8;
+      --accent: #D63A35; --accent-ink: #FFFFFF; --accent-text: #B52D28; --ink: #111111; --ink-text: #F2EFE8;
       --shadow: 0 24px 60px rgba(17,17,17,0.12); --shadow-sm: 0 10px 28px rgba(17,17,17,0.08);
       color-scheme: light;
     }
@@ -70,7 +70,7 @@
       :root:not([data-theme="light"]) {
         --bg: #0E0E0F; --surface: #1C1C1E; --card: #19191B;
         --text: #F2EFE8; --muted: #A09C96; --grey: #77736E; --line: rgba(255,255,255,0.1);
-        --accent: #F5A623; --accent-ink: #16181C; --accent-text: #FFC24D; --ink: #F2EFE8; --ink-text: #111111;
+        --accent: #F0605A; --accent-ink: #0E0E0F; --accent-text: #F0605A; --ink: #F2EFE8; --ink-text: #111111;
         --shadow: 0 24px 60px rgba(0,0,0,0.5); --shadow-sm: 0 10px 28px rgba(0,0,0,0.35);
         color-scheme: dark;
       }
@@ -78,7 +78,7 @@
     :root[data-theme="dark"] {
       --bg: #0E0E0F; --surface: #1C1C1E; --card: #19191B;
       --text: #F2EFE8; --muted: #A09C96; --grey: #77736E; --line: rgba(255,255,255,0.1);
-      --accent: #F5A623; --accent-ink: #16181C; --accent-text: #FFC24D; --ink: #F2EFE8; --ink-text: #111111;
+      --accent: #F0605A; --accent-ink: #0E0E0F; --accent-text: #F0605A; --ink: #F2EFE8; --ink-text: #111111;
       --shadow: 0 24px 60px rgba(0,0,0,0.5); --shadow-sm: 0 10px 28px rgba(0,0,0,0.35);
       color-scheme: dark;
     }
@@ -147,29 +147,29 @@
     .chat-bar i { width: 8px; height: 8px; border-radius: 50%; background: #3BD16F; display: inline-block; }
     .msgs { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 10px; justify-content: flex-end; }
     .msg { max-width: 70%; padding: 9px 13px; border-radius: 14px; background: #2A2C32; line-height: 1.45; }
-    .msg.me { align-self: flex-end; background: #F5A623; color: #16181C; }
+    .msg.me { align-self: flex-end; background: #E8453C; color: #FFFFFF; }
     .msg small { display: block; color: #8B8E97; font-size: 10.5px; margin-bottom: 2px; }
     .compose { margin: 0 12px 12px; padding: 10px 14px; border-radius: 10px; background: #24262B; border: 1px solid #34363D; min-height: 42px; color: #E9E9EC; }
     .compose .typed { white-space: pre-wrap; }
-    .compose .caret { display: inline-block; width: 2px; height: 16px; background: #F5A623; vertical-align: -3px; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+    .compose .caret { display: inline-block; width: 2px; height: 16px; background: #E8453C; vertical-align: -3px; margin-left: 1px; animation: blink 1s steps(1) infinite; }
     .compose .ph { color: #6E7079; }
     @keyframes blink { 50% { opacity: 0; } }
     .said { position: absolute; left: 50%; transform: translateX(-50%); bottom: 58px; width: max-content; max-width: 80%; text-align: center; padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,0.08); color: #C9C5BE; font-size: 12px; font-style: italic; border: 1px dashed rgba(255,255,255,0.18); opacity: 0; transition: opacity .3s; }
     .said.on { opacity: 1; }
-    .said b { font-style: normal; color: #F5A623; font-weight: 600; }
+    .said b { font-style: normal; color: #E8453C; font-weight: 600; }
     .pill { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); height: 34px; min-width: 52px; padding: 0 14px; border-radius: 99px; background: rgba(20,20,24,0.92); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; gap: 3px; transition: all .25s; }
     .pill.idle { height: 8px; min-width: 44px; padding: 0; opacity: .6; }
-    .pill i { width: 3px; height: 4px; border-radius: 2px; background: #F5A623; display: none; }
+    .pill i { width: 3px; height: 4px; border-radius: 2px; background: #E8453C; display: none; }
     .pill.listen i { display: block; animation: lvl .5s ease-in-out infinite alternate; }
     .pill.listen i:nth-child(2) { animation-delay: .1s; } .pill.listen i:nth-child(3) { animation-delay: .2s; } .pill.listen i:nth-child(4) { animation-delay: .05s; } .pill.listen i:nth-child(5) { animation-delay: .15s; }
     @keyframes lvl { to { height: 18px; } }
-    .pill.busy::after { content: ""; width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); border-top-color: #F5A623; animation: spin .7s linear infinite; }
+    .pill.busy::after { content: ""; width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2); border-top-color: #E8453C; animation: spin .7s linear infinite; }
     .pill.done::after { content: "✓"; color: #5FD68A; font-size: 14px; }
     @keyframes spin { to { transform: rotate(1turn); } }
     .keys { position: absolute; left: 14px; bottom: 14px; display: flex; gap: 4px; opacity: .35; transition: opacity .2s; }
     .keys.on { opacity: 1; }
     .keys kbd { font: 600 11px/1 Inter, sans-serif; color: #fff; background: #2A2C32; border: 1px solid #3A3D44; border-bottom-width: 3px; border-radius: 6px; padding: 6px 8px; }
-    .keys.on kbd { background: #F5A623; color: #16181C; border-color: #C9850F; transform: translateY(2px); border-bottom-width: 1px; }
+    .keys.on kbd { background: #E8453C; color: #FFFFFF; border-color: #B52D28; transform: translateY(2px); border-bottom-width: 1px; }
     @media (max-width: 640px) { .desk { height: 380px; } .chat { left: 3%; right: 3%; } .msg { max-width: 85%; } .said { max-width: 92%; font-size: 11px; } .keys { display: none; } }
 
     /* reveal */
@@ -205,8 +205,8 @@
     .pair { display: grid; grid-template-columns: 1fr 40px 1fr; gap: 10px; align-items: center; }
     .pair > div { border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 16px 18px; background: #151516; font-size: 15px; white-space: pre-line; }
     .pair .in { color: #9A968F; font-style: italic; }
-    .pair .out { color: #F2EFE8; border-color: rgba(245,166,35,0.45); }
-    .pair .arr { text-align: center; color: #F5A623; font-size: 20px; border: 0; background: none; padding: 0; }
+    .pair .out { color: #F2EFE8; border-color: rgba(232,69,60,0.45); }
+    .pair .arr { text-align: center; color: #E8453C; font-size: 20px; border: 0; background: none; padding: 0; }
     .pair small { display: block; font-style: normal; color: #77736E; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 6px; }
     @media (max-width: 760px) { .pair { grid-template-columns: 1fr; } .pair .arr { transform: rotate(90deg); } .band { margin: 0 8px; border-radius: 28px; } }
 
@@ -300,7 +300,7 @@
         <a class="btn btn-accent" href="#download"><svg aria-hidden="true"><use href="#i-dl"/></svg>Download for Windows</a>
         <a class="btn btn-ghost" href="https://github.com/sarathlal-12/utter"><svg aria-hidden="true"><use href="#i-gh"/></svg>Source on GitHub</a>
       </div>
-      <div class="meta"><span><b>v1.0.0</b></span><span>Windows 10 &amp; 11</span><span>No internet needed</span><span>No account</span></div>
+      <div class="meta"><span><b>v1.1.0</b></span><span>Windows 10 &amp; 11</span><span>No internet needed</span><span>No account</span></div>
 
       <div class="lap" aria-hidden="true">
         <div class="screen">
@@ -371,7 +371,7 @@
           <p class="sub">For a sentence or two</p>
           <ol>
             <li><span>Click into any text box: an email, a chat, a doc.</span></li>
-            <li><span>Hold <kbd class="k">Ctrl</kbd> + <kbd class="k">Win</kbd> and speak. A small amber bar at the bottom of the screen shows Utter is listening.</span></li>
+            <li><span>Hold <kbd class="k">Ctrl</kbd> + <kbd class="k">Win</kbd> and speak. A small bar at the bottom of the screen shows Utter is listening.</span></li>
             <li><span>Let go. The cleaned text is typed at your cursor and stays on your clipboard. <kbd class="k">Esc</kbd> cancels.</span></li>
           </ol>
         </div>
@@ -390,7 +390,7 @@
     <section class="band" id="cleanup">
       <div class="wrap">
         <div class="rv">
-          <div class="eyebrow" style="color:#F5A623">Cleanup</div>
+          <div class="eyebrow" style="color:#E8453C">Cleanup</div>
           <h2>What you say, <span>and what gets typed.</span></h2>
         </div>
         <div class="pairs">
@@ -413,9 +413,9 @@
         <div class="card rv">
           <div class="ic"><svg><use href="#i-win"/></svg></div>
           <h3>Utter for Windows</h3>
-          <dl><dt>Version</dt><dd>1.0.0</dd><dt>File</dt><dd>Utter_Setup_v1.0.0.exe · 549 MB</dd><dt>Needs</dt><dd>Windows 10 or 11, 64-bit, a microphone</dd><dt>Memory</dt><dd>About 400 MB while idle. The AI model (500 MB) loads only while you dictate</dd></dl>
+          <dl><dt>Version</dt><dd>1.1.0</dd><dt>File</dt><dd>Utter_Setup_v1.1.0.exe · 549 MB</dd><dt>Needs</dt><dd>Windows 10 or 11, 64-bit, a microphone</dd><dt>Memory</dt><dd>About 140 MB while idle. The AI model (500 MB) loads only while you dictate</dd></dl>
           <div class="row2">
-            <a class="btn btn-accent" href="https://github.com/sarathlal-12/utter/releases/download/v1.0.0/Utter_Setup_v1.0.0.exe"><svg aria-hidden="true"><use href="#i-dl"/></svg>Download installer</a>
+            <a class="btn btn-accent" href="https://github.com/sarathlal-12/utter/releases/download/v1.1.0/Utter_Setup_v1.1.0.exe"><svg aria-hidden="true"><use href="#i-dl"/></svg>Download installer</a>
             <a class="btn btn-ghost" href="https://github.com/sarathlal-12/utter/releases">All releases</a>
           </div>
           <p class="note">The download is large because the speech and cleanup models are included, so Utter never needs the internet. It installs for your user only, no admin needed.</p>
@@ -450,7 +450,7 @@
         <a href="https://github.com/sarathlal-12/utter/releases">All releases</a>
         <a href="https://github.com/sarathlal-12/utter/issues">Report a problem</a>
       </nav>
-      <span>© 2026 Utter · v1.0. MIT license.</span>
+      <span>© 2026 Utter · v1.1. MIT license.</span>
     </div>
   </footer>
 

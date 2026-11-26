@@ -60,6 +60,6 @@
 
 - Website: https://sarath-apps.vercel.app/utter/
 - Source code: https://github.com/sarathlal-12/utter
-- Downloads (v1.0.0): https://github.com/sarathlal-12/utter/releases/tag/v1.0.0
+- Downloads (v1.1.0): https://github.com/sarathlal-12/utter/releases/tag/v1.1.0
 - Price: free, MIT license. No account; nothing leaves the PC.
 - Platforms: Windows 10 and 11, 64-bit (installer, per-user). English only for now.

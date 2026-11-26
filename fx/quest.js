@@ -219,7 +219,7 @@
     airbridge: { name: 'AirBridge', icon: '/airbridge/icon.png', c: '#5B8FFF', dev: 'phone' },
     light: { name: '.light', icon: '/light/icon.png', c: '#30D158', dev: 'pc' },
     byterake: { name: 'Byterake', icon: '/byterake/icon.png', c: '#9579FC', dev: 'pc' },
-    utter: { name: 'Utter', icon: '/utter/icon.png', c: '#F5A623', dev: 'pc' },
+    utter: { name: 'Utter', icon: '/utter/icon.png', c: '#E8453C', dev: 'pc' },
   };
   var LYRICS = ['Windows down on the coast road', 'No bars left on my phone', 'But the song keeps on playing', 'Saved it before we left home', 'Every word right where it should be', 'No signal, just you and me', 'Turn it up, the tide is low', 'Some songs never need to load'];
 
