@@ -298,6 +298,29 @@
     @keyframes eq { 0%, 100% { height: 18px; } 50% { height: 66px; } }
     @media (prefers-reduced-motion: reduce) { .eq i { animation: none; height: 40px; } }
     @media (max-width: 900px) { .bento { grid-template-columns: 1fr; } .span2 { grid-column: auto; } }
+    /* The glass effect (.fx .card) turned dark cards white in light mode; keep them dark. */
+    .fx .card.dark { background: color-mix(in srgb, #111 90%, transparent); }
+    /* What's new (2.4) mock-ups */
+    .new-chat { display: grid; gap: 10px; width: min(440px, 88%); }
+    .new-chat .q { justify-self: end; background: #F2EFE8; color: #111; border-radius: 18px 18px 4px 18px; padding: 10px 14px; font-size: 13px; font-weight: 600; max-width: 85%; }
+    .new-chat .a { justify-self: start; background: #2A2A2D; color: #F2EFE8; border-radius: 18px 18px 18px 4px; padding: 10px 14px; font-size: 13px; max-width: 85%; }
+    .new-chat .a b { color: #6FD39A; }
+    .shz { width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 14%, transparent); border: 2px solid color-mix(in srgb, var(--accent) 35%, transparent); position: relative; }
+    .shz::after { content: ""; position: absolute; inset: -12px; border-radius: 50%; border: 2px solid color-mix(in srgb, var(--accent) 25%, transparent); animation: shzPulse 1.8s ease-out infinite; }
+    @keyframes shzPulse { from { transform: scale(.85); opacity: 1; } to { transform: scale(1.25); opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .shz::after { animation: none; } }
+    .tq { width: min(300px, 90%); display: grid; gap: 6px; font-size: 12px; }
+    .tq div { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 6px 10px; }
+    .tq div.on { border-color: var(--accent); font-weight: 700; }
+    .tq small { color: var(--muted); width: 14px; text-align: center; }
+    .tq .cov { width: 22px; border-radius: 6px; }
+    .pick { display: grid; gap: 6px; font-size: 13px; font-weight: 600; width: min(260px, 90%); }
+    .pick span { display: flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 7px 12px; }
+    .pick i { width: 16px; height: 16px; border-radius: 5px; border: 2px solid var(--line); display: grid; place-items: center; font-style: normal; font-size: 11px; color: #fff; }
+    .pick i.y { background: var(--accent); border-color: var(--accent); }
+    .eqs { display: flex; gap: 14px; align-items: flex-end; height: 90px; }
+    .eqs i { width: 8px; border-radius: 8px; background: var(--line); position: relative; height: 90px; }
+    .eqs i::after { content: ""; position: absolute; left: -5px; width: 18px; height: 18px; border-radius: 50%; background: var(--accent); box-shadow: var(--shadow-sm); bottom: var(--v); }
 
     /* ---------- desktop window ---------- */
     .desk { margin-top: 48px; border-radius: 26px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); overflow: hidden; }
@@ -410,7 +433,7 @@
     <div class="nav-in">
       <a class="brand" href="#top" aria-label="SpotVault home"><svg class="mark" aria-hidden="true"><use href="#logo"/></svg><span class="wm">Spot<span>Vault</span></span></a>
       <nav class="nav-links" aria-label="Main">
-        <a href="/">All projects</a><a href="#watch">Watch</a><a href="#tour">Tour</a><a href="#features">Features</a><a href="#windows">Windows</a><a href="#download">Download</a><a href="#iphone">iPhone</a><a href="#faq">FAQ</a>
+        <a href="/">All projects</a><a href="#new">New</a><a href="#watch">Watch</a><a href="#tour">Tour</a><a href="#features">Features</a><a href="#windows">Windows</a><a href="#download">Download</a><a href="#iphone">iPhone</a><a href="#faq">FAQ</a>
       </nav>
       <button class="icon-btn theme-toggle" type="button" aria-label="Switch light or dark">
         <svg class="sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="moon" aria-hidden="true"><use href="#i-moon"/></svg>
@@ -461,6 +484,61 @@
         </div>
       </div>
     </header>
+
+    <!-- ================= WHAT'S NEW (2.4) ================= -->
+    <section id="new" aria-labelledby="newH">
+      <div class="wrap">
+        <p class="eyebrow rv">What's new in 2.4</p>
+        <h2 class="two-tone rv" id="newH">Find new music. <span>Keep it without the clutter.</span></h2>
+        <div class="bento">
+          <article class="card dark span2 rv">
+            <div class="vis" style="height:190px">
+              <div class="new-chat">
+                <div class="q">Find 15 songs like Kesariya I don't have yet and save them to Rainy Day.</div>
+                <div class="a"><b>✓ Saved 15 songs</b> to a new playlist, Rainy Day. They're on your PC and reach your phone on the next sync.</div>
+              </div>
+            </div>
+            <h3>An AI that finds your next favourite song</h3>
+            <p>Connect SpotVault to Claude, Cursor or any AI app with MCP. Ask for songs like one you love, an artist's newest releases or a whole album. It knows what you already have, makes playlists and saves the songs. One click sets it up in Claude Desktop.</p>
+          </article>
+          <article class="card rv">
+            <div class="vis" style="height:190px">
+              <div style="display:grid;justify-items:center;gap:12px">
+                <div class="shz"><div class="eq" style="height:34px;gap:4px"><i style="width:6px"></i><i style="width:6px"></i><i style="width:6px"></i><i style="width:6px"></i></div></div>
+                <span class="chip">Kesariya · Arijit Singh</span>
+              </div>
+            </div>
+            <h3>What's this song?</h3>
+            <p>Tap the wave in Search to name the song playing around you, then play it, save it or add it to a playlist. Android and Windows can also hear what's playing on the device itself.</p>
+          </article>
+          <article class="card rv">
+            <div class="vis" style="height:190px">
+              <div class="tq">
+                <div><small>1</small><span class="cov g1"></span>Trending 20 India</div>
+                <div class="on"><small>2</small><span class="cov g3"></span>Now playing · Save ↓</div>
+                <div><small>3</small><span class="cov g4"></span>Up next</div>
+              </div>
+            </div>
+            <h3>Trending, as your queue</h3>
+            <p>Today's Apple Music and YouTube Music charts for your country, including Hindi, Tamil, Telugu and Punjabi lists. Play one song and the whole chart becomes your queue: skip through it and save the ones you like.</p>
+          </article>
+          <article class="card span2 rv">
+            <div class="vis" style="height:190px">
+              <div class="s-row" style="gap:26px;flex-wrap:wrap;justify-content:center">
+                <div class="pick">
+                  <span><i class="y">✓</i>Slow songs</span>
+                  <span><i class="y">✓</i>Hindi</span>
+                  <span><i></i>Gym</span>
+                </div>
+                <div style="text-align:center"><div style="font-size:34px;font-weight:800;letter-spacing:-.03em">1 copy</div><div class="s-s" style="font-size:12px">shown in every playlist you tick</div></div>
+              </div>
+            </div>
+            <h3>Save to several playlists. Store it once.</h3>
+            <p>Tick as many playlists as you like when you save a song. It downloads once and shows up in each of them, so it takes no extra space on your PC or phone. SpotVault also finds songs you already saved twice and frees up that space.</p>
+          </article>
+        </div>
+      </div>
+    </section>
 
     <!-- ================= WATCH: 60 s promo video ================= -->
     <section class="watch" id="watch" aria-labelledby="watchH">
@@ -640,11 +718,11 @@
       <div class="wrap">
         <p class="eyebrow rv">Also on Windows</p>
         <h2 class="two-tone rv" id="winH">For big playlists, <span>and your desk.</span></h2>
-        <p class="lead rv" style="margin-top:16px">Save a whole Spotify, YouTube or SoundCloud playlist in one go, listen on your PC with live lyrics, then send it all to your phone with one scan.</p>
+        <p class="lead rv" style="margin-top:16px">Save a whole Spotify, YouTube or SoundCloud playlist in one go, listen on your PC with live lyrics, then send it all to your phone with one scan. Several playlists sync at once, and Stop stops right away.</p>
         <div class="desk rv" aria-hidden="true">
           <div class="desk-bar"><i></i><i></i><i></i></div>
           <div class="desk-body">
-            <div class="desk-side"><span class="on">Home</span><span>Songs</span><span>Sync &amp; downloads</span><span>Jam</span><span>Studio</span></div>
+            <div class="desk-side"><span class="on">Home</span><span>Songs</span><span>Find songs</span><span>Trending</span><span>Sync &amp; downloads</span><span>Jam</span><span>Settings</span></div>
             <div class="desk-main">
               <h4>Good evening, Sarath</h4>
               <div class="desk-cards">
@@ -656,6 +734,23 @@
             </div>
             <div class="desk-now"><div class="cov g5"></div><b>Midnight Drive</b><div style="color:var(--muted)">Night Cassette</div><div class="desk-ly"><b>City lights are calling out my name,</b><span>every road leads back the same…</span></div></div>
           </div>
+        </div>
+        <div class="bento" style="margin-top:18px">
+          <article class="card rv">
+            <div class="vis"><div class="eqs" aria-hidden="true"><i style="--v:62px"></i><i style="--v:48px"></i><i style="--v:34px"></i><i style="--v:52px"></i><i style="--v:66px"></i></div></div>
+            <h3>Equaliser</h3>
+            <p>Five bands, presets like Bass boost and Vocal, and your own saved presets. On the player bar, one click away.</p>
+          </article>
+          <article class="card dark rv">
+            <div class="vis"><div class="chips"><span class="chip" style="background:#2A2A2D;color:#F2EFE8;border-color:#2A2A2D">Claude</span><span class="chip" style="background:#2A2A2D;color:#F2EFE8;border-color:#2A2A2D">Cursor</span><span class="chip" style="background:#2A2A2D;color:#F2EFE8;border-color:#2A2A2D">Any MCP app</span></div></div>
+            <h3>Your AI music assistant</h3>
+            <p>Settings → AI assistants → Add to Claude Desktop. Then just ask for music. SpotVault opens by itself, minimised, when it needs to save.</p>
+          </article>
+          <article class="card rv">
+            <div class="vis"><div class="chips"><span class="chip tag-ok">✓ 123 copies linked</span><span class="chip">517 MB freed</span></div></div>
+            <h3>No more duplicate songs</h3>
+            <p>Identical copies across playlists are linked into one file by themselves. Settings → Duplicate songs shows the same song downloaded twice, so you pick which one to keep.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -678,7 +773,7 @@
     <section id="download" aria-labelledby="dlH">
       <div class="wrap">
         <p class="eyebrow rv">Download</p>
-        <h2 class="two-tone rv" id="dlH">Get SpotVault 2.2. <span>It's free.</span></h2>
+        <h2 class="two-tone rv" id="dlH">Get SpotVault 2.4. <span>It's free.</span></h2>
         <p class="lead rv" style="margin-top:16px">The phone app is all you need. Add the Windows app for big playlist syncs and listening on your PC. Already have it? Press Check for updates.</p>
         <div class="dl">
           <article class="card rv">
@@ -745,6 +840,9 @@
           <details class="rv"><summary>Can I share songs without Wi-Fi?</summary><p>Yes, over Bluetooth. The other phone opens Jam and turns on Receive by Bluetooth, then you pick Share → Bluetooth. Android to Android and iPhone to iPhone are fast. iPhone to Android works too, but slowly (about 1 to 3 minutes a song), so Wi-Fi or a hotspot is better for those.</p></details>
           <details class="rv"><summary>Will songs have movie dialogue or video intros?</summary><p>No. SpotVault looks for the clean studio song first on YouTube Music, then SoundCloud, and only then on YouTube, where it picks lyric videos and skips scenes, trailers, loops and remixes.</p></details>
           <details class="rv"><summary>Can I add songs from my phone?</summary><p>Yes. Search → Find new songs, tap a song to listen, then Save it into a playlist. Or open a playlist and tap Add songs from the web. The phone downloads it by itself.</p></details>
+          <details class="rv"><summary>How do I connect the AI music finder?</summary><p>Install the Windows app, then open Settings → AI assistants. Press Add to Claude Desktop and then Install in the window Claude opens. There are also Add to Cursor, a Claude Code command and a copyable setup for any other app that supports MCP. Then ask things like "What's new from Sid Sriram? Save his latest single to Slow songs".</p></details>
+          <details class="rv"><summary>What can "What's this song?" hear?</summary><p>On every device it can listen through the microphone. Android and Windows can also hear what's playing on the device itself, like a video or another app (Android asks for permission first, and some apps block it). iPhone only allows the microphone.</p></details>
+          <details class="rv"><summary>How does "one copy per song" save space?</summary><p>When a song is in several playlists, SpotVault keeps one file and shows it in each playlist folder (a Windows hard link). Delete it from one playlist and it stays in the others. Your phone stores it once too. Exact copies are linked automatically; for the same song downloaded twice, Settings → Duplicate songs lets you choose which copy to keep, and the other goes to the Recycle Bin.</p></details>
           <details class="rv"><summary>How do I update?</summary><p>SpotVault tells you when an update is ready: press Check for updates on Windows (Settings → Updates) or on the phone (Sync → More). On iPhone, AltStore shows the update. Updating keeps your playlists, songs and settings.</p></details>
           <details class="rv"><summary>Does it work in the car?</summary><p>Yes. Car mode in Studio gives you big buttons. On Android Auto, SpotVault shows your playlists on the car screen. Over Bluetooth and CarPlay, the song and controls show like any music app.</p></details>
           <details class="rv"><summary>Where are my songs saved?</summary><p>On the PC, in your Music folder by default, one folder per playlist. On the phone, inside the SpotVault app's storage (on iPhone you can also see them in the Files app).</p></details>
